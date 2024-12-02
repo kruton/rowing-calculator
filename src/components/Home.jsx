@@ -1,26 +1,50 @@
-import {
-  Box,
-  Heading,
-  Stack,
-  VStack,
-} from '@chakra-ui/react'
+import { Box, Text, VStack, Container, Heading } from '@chakra-ui/react'
 
-function Home({ isMobile }) {
+function Home() {
   return (
-    <Stack spacing={6} align={"stretch"}>
-      <VStack spacing={4} align="stretch">
-        <Heading size="lg">Welcome to Rowing Calculator</Heading>
-        <Box fontSize="lg" color="gray.600">
-          Select a calculation tool from the menu {isMobile ? 'in the top left' : 'above'} to get started.
-          This app helps you calculate:
+    <Container maxW="container.md" py={8}>
+      <VStack spacing={6} align="stretch">
+        <Box textAlign="center">
+          <Heading size="xl" mb={4}>
+            Welcome to Rowing Calculator
+          </Heading>
+          <Text fontSize="lg">
+            A collection of useful tools for rowing performance calculations.
+          </Text>
         </Box>
-        <VStack spacing={2} align="start" fontSize="md" color="gray.700">
-          <Box>• Power-to-weight ratio (watts per kilogram)</Box>
-          <Box>• 500m split times from total time and distance</Box>
-          <Box>• Total time from 500m split and distance</Box>
-        </VStack>
+
+        <Box borderWidth="1px" borderRadius="lg" p={6}>
+          <VStack spacing={4} align="stretch">
+            <Text fontSize="md">
+              <strong>Available Calculators:</strong>
+            </Text>
+            <Text>
+              • <strong>Watts/kg:</strong> Calculate your power-to-weight ratio
+            </Text>
+            <Text>
+              • <strong>Time Calculator:</strong> Convert between split times, total times, and distances. Enter any two values to calculate the third.
+            </Text>
+          </VStack>
+        </Box>
+
+        <Box borderWidth="1px" borderRadius="lg" p={6}>
+          <VStack spacing={4} align="stretch">
+            <Text fontSize="md">
+              <strong>How to Use:</strong>
+            </Text>
+            <Text>
+              1. Select a calculator from the navigation menu
+            </Text>
+            <Text>
+              2. Enter your values in the input fields
+            </Text>
+            <Text>
+              3. Results will update automatically
+            </Text>
+          </VStack>
+        </Box>
       </VStack>
-    </Stack>
+    </Container>
   )
 }
 

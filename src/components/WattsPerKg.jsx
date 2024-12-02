@@ -81,7 +81,7 @@ function WattsPerKg() {
       </FormControl>
 
       {result && (
-        <Box p={4} bg="blue.50" borderRadius="md">
+        <Box p={4} borderRadius="md" borderWidth="1px">
           <Text fontSize="xl" fontWeight="bold">
             Result: {result} W/kg
           </Text>

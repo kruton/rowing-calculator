@@ -19,13 +19,13 @@ import {
   IconButton,
   Text,
   Fade,
+  useColorMode,
 } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
-import { HamburgerIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { extendTheme } from '@chakra-ui/react'
 import WattsPerKg from './components/WattsPerKg'
-import SplitConverter from './components/SplitConverter'
-import TotalTimeCalculator from './components/TotalTimeCalculator'
+import TimeCalculator from './components/TimeCalculator'
 import Home from './components/Home'
 
 const gradientAnimation = keyframes`
@@ -35,6 +35,10 @@ const gradientAnimation = keyframes`
 `
 
 const theme = extendTheme({
+  config: {
+    initialColorMode: 'system',
+    useSystemColorMode: true,
+  },
   fonts: {
     heading: "'Montserrat', sans-serif",
     logo: "'Orbitron', sans-serif",
@@ -45,6 +49,14 @@ const theme = extendTheme({
     lg: '62em',
     xl: '80em',
     '2xl': '96em',
+  },
+  styles: {
+    global: (props) => ({
+      body: {
+        bg: props.colorMode === 'dark' ? 'gray.800' : 'white',
+        color: props.colorMode === 'dark' ? 'white' : 'gray.800',
+      },
+    }),
   },
 })
 
@@ -68,6 +80,7 @@ function NavButton({ to, colorScheme, children, isMobile, onClick }) {
 
 function NavigationContent({ onNavigate, isMobile }) {
   const navigate = useNavigate()
+  const { colorMode, toggleColorMode } = useColorMode()
 
   const handleNavigation = (path) => {
     navigate(path)
@@ -80,6 +93,7 @@ function NavigationContent({ onNavigate, isMobile }) {
       gap={2}
       justify="center"
       wrap="wrap"
+      align="center"
     >
       <NavButton
         to="/"
@@ -98,21 +112,21 @@ function NavigationContent({ onNavigate, isMobile }) {
         Watts/kg
       </NavButton>
       <NavButton
-        to="/split-converter"
-        onClick={() => handleNavigation('/split-converter')}
-        colorScheme="green"
-        isMobile={isMobile}
-      >
-        Split Converter
-      </NavButton>
-      <NavButton
-        to="/total-time"
-        onClick={() => handleNavigation('/total-time')}
+        to="/time-calculator"
+        onClick={() => handleNavigation('/time-calculator')}
         colorScheme="purple"
         isMobile={isMobile}
       >
-        Total Time
+        Time Calculator
       </NavButton>
+      <IconButton
+        aria-label="Toggle color mode"
+        icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+        onClick={toggleColorMode}
+        colorScheme={colorMode === 'light' ? 'purple' : 'yellow'}
+        variant="outline"
+        size="md"
+      />
     </Flex>
   )
 }
@@ -174,7 +188,6 @@ function AppContent() {
             <Box
               w="100%"
               p={[4, 6]}
-              bg="white"
               borderRadius="lg"
               boxShadow="md"
               mx="auto"
@@ -197,18 +210,10 @@ function AppContent() {
                   }
                 />
                 <Route
-                  path="/split-converter"
+                  path="/time-calculator"
                   element={
                     <AnimatedRoute>
-                      <SplitConverter />
-                    </AnimatedRoute>
-                  }
-                />
-                <Route
-                  path="/total-time"
-                  element={
-                    <AnimatedRoute>
-                      <TotalTimeCalculator />
+                      <TimeCalculator />
                     </AnimatedRoute>
                   }
                 />
