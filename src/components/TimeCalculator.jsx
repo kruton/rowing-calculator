@@ -15,6 +15,7 @@ import {
 function TimeCalculator() {
   const [splitMinutes, setSplitMinutes] = useState('')
   const [splitSeconds, setSplitSeconds] = useState('')
+  const [splitTenths, setSplitTenths] = useState('')
   const [totalHours, setTotalHours] = useState('')
   const [totalMinutes, setTotalMinutes] = useState('')
   const [totalSeconds, setTotalSeconds] = useState('')
@@ -40,7 +41,8 @@ function TimeCalculator() {
 
     try {
       const splitTimeInSeconds = (splitMinutes ? Number(splitMinutes) * 60 : 0) +
-        (splitSeconds ? Number(splitSeconds) : 0)
+        (splitSeconds ? Number(splitSeconds) : 0) +
+        (splitTenths ? Number(splitTenths) / 10 : 0)
       const totalTimeInSeconds = (totalHours ? Number(totalHours) * 3600 : 0) +
         (totalMinutes ? Number(totalMinutes) * 60 : 0) +
         (totalSeconds ? Number(totalSeconds) : 0)
@@ -53,6 +55,7 @@ function TimeCalculator() {
       if (inputsToCalculate === 'split') {
         setSplitMinutes('')
         setSplitSeconds('')
+        setSplitTenths('')
       } else if (inputsToCalculate === 'total') {
         setTotalHours('')
         setTotalMinutes('')
@@ -72,6 +75,7 @@ function TimeCalculator() {
         const splitTime = (totalTimeInSeconds / distanceInMeters) * 500
         setSplitMinutes(Math.floor(splitTime / 60).toString())
         setSplitSeconds(Math.floor(splitTime % 60).toString())
+        setSplitTenths(Math.floor((splitTime * 10) % 10).toString())
       } else if (lastTwoInputs.includes('split') && lastTwoInputs.includes('total') &&
         splitTimeInSeconds > 0 && totalTimeInSeconds > 0) {
         const calculatedDistance = (totalTimeInSeconds / splitTimeInSeconds) * 500
@@ -86,11 +90,18 @@ function TimeCalculator() {
     } catch (err) {
       setError('Invalid input values')
     }
-  }, [lastTwoInputs, splitMinutes, splitSeconds, totalHours, totalMinutes, totalSeconds, distance])
+  }, [lastTwoInputs, splitMinutes, splitSeconds, splitTenths, totalHours, totalMinutes, totalSeconds, distance])
 
   const handleSplitChange = (value, setter) => {
     if (value === '' || (Number(value) >= 0 && Number(value) < 60)) {
       setter(value)
+      updateLastInputs('split')
+    }
+  }
+
+  const handleSplitTenthsChange = (value) => {
+    if (value === '' || (Number(value) >= 0 && Number(value) < 10)) {
+      setSplitTenths(value)
       updateLastInputs('split')
     }
   }
@@ -117,7 +128,7 @@ function TimeCalculator() {
     <VStack spacing={6} align="stretch">
       <FormControl>
         <FormLabel>Split Time (per 500m)</FormLabel>
-        <HStack spacing={4}>
+        <HStack spacing={2} align="center">
           <InputGroup>
             <Input
               type="number"
@@ -126,8 +137,8 @@ function TimeCalculator() {
               placeholder="Min"
               bg={getInputBgColor('split')}
             />
-            <InputRightAddon>min</InputRightAddon>
           </InputGroup>
+          <Text>:</Text>
           <InputGroup>
             <Input
               type="number"
@@ -136,14 +147,24 @@ function TimeCalculator() {
               placeholder="Sec"
               bg={getInputBgColor('split')}
             />
-            <InputRightAddon>sec</InputRightAddon>
+          </InputGroup>
+          <Text>.</Text>
+          <InputGroup>
+            <Input
+              type="number"
+              value={splitTenths}
+              onChange={(e) => handleSplitTenthsChange(e.target.value)}
+              placeholder="0"
+              bg={getInputBgColor('split')}
+              maxLength={1}
+            />
           </InputGroup>
         </HStack>
       </FormControl>
 
       <FormControl>
         <FormLabel>Total Time</FormLabel>
-        <HStack spacing={4}>
+        <HStack spacing={2} align="center">
           <InputGroup>
             <Input
               type="number"
@@ -152,8 +173,8 @@ function TimeCalculator() {
               placeholder="Hr"
               bg={getInputBgColor('total')}
             />
-            <InputRightAddon>hr</InputRightAddon>
           </InputGroup>
+          <Text>:</Text>
           <InputGroup>
             <Input
               type="number"
@@ -162,8 +183,8 @@ function TimeCalculator() {
               placeholder="Min"
               bg={getInputBgColor('total')}
             />
-            <InputRightAddon>min</InputRightAddon>
           </InputGroup>
+          <Text>:</Text>
           <InputGroup>
             <Input
               type="number"
@@ -172,7 +193,6 @@ function TimeCalculator() {
               placeholder="Sec"
               bg={getInputBgColor('total')}
             />
-            <InputRightAddon>sec</InputRightAddon>
           </InputGroup>
         </HStack>
       </FormControl>
