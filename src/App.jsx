@@ -86,9 +86,14 @@ function App() {
   const [isMobile] = useMediaQuery("(max-width: 48em)")
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  // Detect if we're in the GitHub Pages subdirectory
+  const basename = window.location.pathname.startsWith('/rowing-calculator')
+    ? '/rowing-calculator'
+    : ''
+
   return (
     <ChakraProvider theme={theme}>
-      <Router basename={import.meta.env.BASE_URL}>
+      <Router basename={basename}>
         <Flex width={"100vw"} height={"100vh"} alignContent={"center"} justifyContent={"center"}>
           <Box minH="100vh" py={[4, 8]} px={[2, 4]}>
             <Container maxW="container.md">
