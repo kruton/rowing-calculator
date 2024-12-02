@@ -27,7 +27,7 @@ describe('App', () => {
     fireEvent.click(screen.getByText('Split Converter'))
 
     await waitFor(() => {
-      expect(screen.getByText('Split Time Calculator')).toBeInTheDocument()
+      expect(screen.getByText('Total Distance')).toBeInTheDocument()
     })
   })
 
@@ -37,7 +37,8 @@ describe('App', () => {
     fireEvent.click(screen.getByRole('button', { name: /total time/i }))
 
     await waitFor(() => {
-      expect(screen.getByText('Total Time Calculator')).toBeInTheDocument()
+      expect(screen.getByText('500m Split Time')).toBeInTheDocument()
+      expect(screen.getByText('Total Distance')).toBeInTheDocument()
     })
   })
 

@@ -13,8 +13,8 @@ import {
   HStack,
   VStack,
 } from '@chakra-ui/react'
-import { 
-  isValidNonNegativeInteger, 
+import {
+  isValidNonNegativeInteger,
   isWithinTimeLimit,
   formatTimeString,
   validateTimeInput,
@@ -60,7 +60,7 @@ function TotalTimeCalculator() {
     const mins = Number(splitMinutes || 0)
     const secs = Number(splitSeconds || 0)
     const splitTotalSeconds = mins * 60 + secs
-    
+
     if (splitTotalSeconds === 0) {
       setResult(null)
       return
@@ -73,8 +73,6 @@ function TotalTimeCalculator() {
 
   return (
     <Stack spacing={6} align="stretch">
-      <Heading size="lg" textAlign="center">Total Time Calculator</Heading>
-      
       <VStack spacing={4} align="stretch">
         <FormControl isInvalid={!!error}>
           <FormLabel>500m Split Time</FormLabel>

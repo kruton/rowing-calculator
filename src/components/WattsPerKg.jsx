@@ -51,8 +51,6 @@ function WattsPerKg() {
 
   return (
     <Stack spacing={6} align="stretch">
-      <Heading size="lg" textAlign="center">Watts per Kilogram Calculator</Heading>
-      
       <FormControl>
         <FormLabel>Power Output</FormLabel>
         <InputGroup>
