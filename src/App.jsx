@@ -88,7 +88,7 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-      <Router>
+      <Router basename={import.meta.env.BASE_URL}>
         <Flex width={"100vw"} height={"100vh"} alignContent={"center"} justifyContent={"center"}>
           <Box minH="100vh" py={[4, 8]} px={[2, 4]}>
             <Container maxW="container.md">
