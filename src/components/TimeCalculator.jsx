@@ -154,7 +154,7 @@ function TimeCalculator() {
               type="number"
               value={splitTenths}
               onChange={(e) => handleSplitTenthsChange(e.target.value)}
-              placeholder="0"
+              placeholder="Tenths"
               bg={getInputBgColor('split')}
               maxLength={1}
             />
