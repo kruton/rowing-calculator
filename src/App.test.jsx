@@ -1,43 +1,51 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { ChakraProvider } from '@chakra-ui/react'
-import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 
 describe('App', () => {
   const renderWithProviders = (component) => {
     return render(
-      <BrowserRouter>
-        <ChakraProvider>
-          {component}
-        </ChakraProvider>
-      </BrowserRouter>
+      <ChakraProvider>
+        {component}
+      </ChakraProvider>
     )
   }
 
-  it('renders navigation links', () => {
+  it('renders navigation menu', () => {
     renderWithProviders(<App />)
-    
-    expect(screen.getByText('Split Calculator')).toBeInTheDocument()
-    expect(screen.getByText('Total Time Calculator')).toBeInTheDocument()
+
+    expect(screen.getByText('Rowing Calculator')).toBeInTheDocument()
+    expect(screen.getByText('Home')).toBeInTheDocument()
+    expect(screen.getByText('Split Converter')).toBeInTheDocument()
+    expect(screen.getByText('Total Time')).toBeInTheDocument()
+    expect(screen.getByText('Watts/kg')).toBeInTheDocument()
   })
 
-  it('navigates to Split Calculator', () => {
+  it('navigates to Split Calculator', async () => {
     renderWithProviders(<App />)
-    
-    fireEvent.click(screen.getByText('Split Calculator'))
-    expect(screen.getByText('Split Time Calculator')).toBeInTheDocument()
+
+    fireEvent.click(screen.getByText('Split Converter'))
+
+    await waitFor(() => {
+      expect(screen.getByText('Split Time Calculator')).toBeInTheDocument()
+    })
   })
 
-  it('navigates to Total Time Calculator', () => {
+  it('navigates to Total Time Calculator', async () => {
     renderWithProviders(<App />)
-    
-    fireEvent.click(screen.getByText('Total Time Calculator'))
-    expect(screen.getByText('Total Time Calculator')).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: /total time/i }))
+
+    await waitFor(() => {
+      expect(screen.getByText('Total Time Calculator')).toBeInTheDocument()
+    })
   })
 
   it('shows welcome message on home page', () => {
     renderWithProviders(<App />)
-    
-    expect(screen.getByText(/Welcome to the Rowing Calculator/i)).toBeInTheDocument()
+
+    fireEvent.click(screen.getByText('Home'))
+
+    expect(screen.getByText(/Welcome to Rowing Calculator/i)).toBeInTheDocument()
   })
 })

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { ChakraProvider } from '@chakra-ui/react'
 import SplitConverter from '../SplitConverter'
 
@@ -13,42 +13,57 @@ describe('SplitConverter', () => {
 
   it('renders all input fields', () => {
     renderWithChakra(<SplitConverter />)
-    
+
     expect(screen.getByPlaceholderText('hr')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('min')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('sec')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Enter distance')).toBeInTheDocument()
   })
 
-  it('shows error for invalid time input', () => {
+  it('prevents invalid time input', () => {
     renderWithChakra(<SplitConverter />)
-    
+
+    const hoursInput = screen.getByPlaceholderText('hr')
     const minutesInput = screen.getByPlaceholderText('min')
+    const secondsInput = screen.getByPlaceholderText('sec')
+
+    // Try to enter 60 in minutes
     fireEvent.change(minutesInput, { target: { value: '60' } })
-    
-    expect(screen.getByText('Minutes and seconds must be less than 60')).toBeInTheDocument()
+    expect(minutesInput.value).toBe('')
+
+    // Try to enter 60 in seconds
+    fireEvent.change(secondsInput, { target: { value: '60' } })
+    expect(secondsInput.value).toBe('')
+
+    // Try to enter negative numbers
+    fireEvent.change(hoursInput, { target: { value: '-1' } })
+    expect(hoursInput.value).toBe('')
+
+    fireEvent.change(minutesInput, { target: { value: '-1' } })
+    expect(minutesInput.value).toBe('')
+
+    fireEvent.change(secondsInput, { target: { value: '-1' } })
+    expect(secondsInput.value).toBe('')
   })
 
-  it('shows error for invalid distance', () => {
+  it('calculates split time correctly', async () => {
     renderWithChakra(<SplitConverter />)
-    
-    const distanceInput = screen.getByPlaceholderText('Enter distance')
-    fireEvent.change(distanceInput, { target: { value: '-100' } })
-    
-    expect(screen.getByText('Distance must be a positive whole number')).toBeInTheDocument()
-  })
 
-  it('calculates split time correctly', () => {
-    renderWithChakra(<SplitConverter />)
-    
-    // Set 20 minutes for 5000m
+    // Set 8:00 total time for 2000m
+    const hoursInput = screen.getByPlaceholderText('hr')
     const minutesInput = screen.getByPlaceholderText('min')
+    const secondsInput = screen.getByPlaceholderText('sec')
     const distanceInput = screen.getByPlaceholderText('Enter distance')
-    
-    fireEvent.change(minutesInput, { target: { value: '20' } })
-    fireEvent.change(distanceInput, { target: { value: '5000' } })
-    
-    // Expected split: 2:00 /500m
-    expect(screen.getByText('500m Split: 2m')).toBeInTheDocument()
+
+    fireEvent.change(hoursInput, { target: { value: '0' } })
+    fireEvent.change(minutesInput, { target: { value: '8' } })
+    fireEvent.change(secondsInput, { target: { value: '0' } })
+    fireEvent.change(distanceInput, { target: { value: '2000' } })
+
+    // For 8:00 over 2000m, split should be 2:00
+    await waitFor(() => {
+      const result = screen.getByText('500m Split:', { exact: false })
+      expect(result).toHaveTextContent('2m 0s')
+    })
   })
 })

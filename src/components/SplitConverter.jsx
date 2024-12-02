@@ -114,9 +114,10 @@ function SplitConverter() {
               />
             </InputGroup>
           </HStack>
+          {error && <FormErrorMessage>{error}</FormErrorMessage>}
         </FormControl>
 
-        <FormControl>
+        <FormControl isInvalid={!!error}>
           <FormLabel>Total Distance</FormLabel>
           <InputGroup>
             <Input
@@ -127,9 +128,8 @@ function SplitConverter() {
             />
             <InputRightAddon>meters</InputRightAddon>
           </InputGroup>
+          {error && <FormErrorMessage>{error}</FormErrorMessage>}
         </FormControl>
-
-        {error && <FormErrorMessage>{error}</FormErrorMessage>}
 
         {result && (
           <Box p={4} bg="blue.50" borderRadius="md">
