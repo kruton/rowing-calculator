@@ -49,11 +49,17 @@ const theme = extendTheme({
 })
 
 function NavButton({ to, colorScheme, children, isMobile, onClick }) {
+  const location = useLocation()
+  const isActive = location.pathname === to
+
   return (
     <Button
       onClick={onClick}
       colorScheme={colorScheme}
       width={isMobile ? 'full' : 'auto'}
+      variant={isActive ? 'solid' : 'outline'}
+      borderWidth={isActive ? '2px' : '1px'}
+      boxShadow={isActive ? 'md' : 'none'}
     >
       {children}
     </Button>
@@ -76,6 +82,7 @@ function NavigationContent({ onNavigate, isMobile }) {
       wrap="wrap"
     >
       <NavButton
+        to="/"
         onClick={() => handleNavigation('/')}
         colorScheme="blue"
         isMobile={isMobile}
@@ -83,6 +90,7 @@ function NavigationContent({ onNavigate, isMobile }) {
         Home
       </NavButton>
       <NavButton
+        to="/watts-per-kg"
         onClick={() => handleNavigation('/watts-per-kg')}
         colorScheme="teal"
         isMobile={isMobile}
@@ -90,6 +98,7 @@ function NavigationContent({ onNavigate, isMobile }) {
         Watts/kg
       </NavButton>
       <NavButton
+        to="/split-converter"
         onClick={() => handleNavigation('/split-converter')}
         colorScheme="green"
         isMobile={isMobile}
@@ -97,6 +106,7 @@ function NavigationContent({ onNavigate, isMobile }) {
         Split Converter
       </NavButton>
       <NavButton
+        to="/total-time"
         onClick={() => handleNavigation('/total-time')}
         colorScheme="purple"
         isMobile={isMobile}
