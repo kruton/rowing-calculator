@@ -21,6 +21,7 @@ function TimeCalculator() {
   const [distance, setDistance] = useState('')
   const [error, setError] = useState('')
   const [lastTwoInputs, setLastTwoInputs] = useState([])
+  const [watts, setWatts] = useState('')
 
   const calculatedFieldColor = useColorModeValue('gray.200', 'gray.700')
 
@@ -38,11 +39,11 @@ function TimeCalculator() {
     if (lastTwoInputs.length < 2) return
 
     try {
-      const splitTimeInSeconds = (splitMinutes ? Number(splitMinutes) * 60 : 0) + 
-                                (splitSeconds ? Number(splitSeconds) : 0)
-      const totalTimeInSeconds = (totalHours ? Number(totalHours) * 3600 : 0) + 
-                               (totalMinutes ? Number(totalMinutes) * 60 : 0) + 
-                               (totalSeconds ? Number(totalSeconds) : 0)
+      const splitTimeInSeconds = (splitMinutes ? Number(splitMinutes) * 60 : 0) +
+        (splitSeconds ? Number(splitSeconds) : 0)
+      const totalTimeInSeconds = (totalHours ? Number(totalHours) * 3600 : 0) +
+        (totalMinutes ? Number(totalMinutes) * 60 : 0) +
+        (totalSeconds ? Number(totalSeconds) : 0)
       const distanceInMeters = Number(distance)
 
       const inputsToCalculate = ['split', 'total', 'distance'].filter(
@@ -60,21 +61,27 @@ function TimeCalculator() {
         setDistance('')
       }
 
-      if (lastTwoInputs.includes('split') && lastTwoInputs.includes('distance') && 
-          splitTimeInSeconds > 0 && distanceInMeters > 0) {
+      if (lastTwoInputs.includes('split') && lastTwoInputs.includes('distance') &&
+        splitTimeInSeconds > 0 && distanceInMeters > 0) {
         const totalTime = (splitTimeInSeconds / 500) * distanceInMeters
         setTotalHours(Math.floor(totalTime / 3600).toString())
         setTotalMinutes(Math.floor((totalTime % 3600) / 60).toString())
         setTotalSeconds(Math.floor(totalTime % 60).toString())
-      } else if (lastTwoInputs.includes('total') && lastTwoInputs.includes('distance') && 
-                 totalTimeInSeconds > 0 && distanceInMeters > 0) {
+      } else if (lastTwoInputs.includes('total') && lastTwoInputs.includes('distance') &&
+        totalTimeInSeconds > 0 && distanceInMeters > 0) {
         const splitTime = (totalTimeInSeconds / distanceInMeters) * 500
         setSplitMinutes(Math.floor(splitTime / 60).toString())
         setSplitSeconds(Math.floor(splitTime % 60).toString())
-      } else if (lastTwoInputs.includes('split') && lastTwoInputs.includes('total') && 
-                 splitTimeInSeconds > 0 && totalTimeInSeconds > 0) {
+      } else if (lastTwoInputs.includes('split') && lastTwoInputs.includes('total') &&
+        splitTimeInSeconds > 0 && totalTimeInSeconds > 0) {
         const calculatedDistance = (totalTimeInSeconds / splitTimeInSeconds) * 500
         setDistance(Math.round(calculatedDistance).toString())
+      }
+
+      // Corrected watts calculation using split time in seconds
+      if (splitTimeInSeconds > 0) {
+        const calculatedWatts = 2.80 / Math.pow(splitTimeInSeconds / 500, 3)
+        setWatts(calculatedWatts.toFixed(2))
       }
     } catch (err) {
       setError('Invalid input values')
@@ -184,6 +191,12 @@ function TimeCalculator() {
         </InputGroup>
       </FormControl>
 
+      {watts && (
+        <Box p={4} borderRadius="md" borderWidth="1px">
+          <Text fontSize="lg" fontWeight="bold">Watts: {watts}</Text>
+        </Box>
+      )}
+
       {error && (
         <Box p={4} borderRadius="md" borderWidth="1px" borderColor="red.500">
           <Text color="red.500">{error}</Text>
@@ -193,7 +206,7 @@ function TimeCalculator() {
       <Box p={4} borderRadius="md" borderWidth="1px">
         <Text fontSize="md">
           Enter any two values and the third will be calculated automatically.
-          Currently tracking: {lastTwoInputs.join(' and ')}
+          Currently tracking: <strong>{lastTwoInputs.join(' and ')}</strong>
         </Text>
       </Box>
     </VStack>
