@@ -20,12 +20,19 @@ import {
   Text,
   Fade,
 } from '@chakra-ui/react'
+import { keyframes } from '@emotion/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
 import { extendTheme } from '@chakra-ui/react'
 import WattsPerKg from './components/WattsPerKg'
 import SplitConverter from './components/SplitConverter'
 import TotalTimeCalculator from './components/TotalTimeCalculator'
 import Home from './components/Home'
+
+const gradientAnimation = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+`
 
 const theme = extendTheme({
   fonts: {
@@ -125,27 +132,17 @@ function AppContent() {
                   fontSize={["xl", "2xl"]}
                   fontFamily="logo"
                   fontWeight="900"
-                  bgGradient="linear(to-r, cyan.400, blue.600)"
-                  bgClip="text"
                   letterSpacing="wider"
                   textTransform="uppercase"
-                  mr={2}
+                  bgSize="300% 300%"
+                  bgGradient="linear(to-r, blue.400, cyan.400, purple.400, pink.400, blue.400)"
+                  bgClip="text"
+                  css={{
+                    animation: `${gradientAnimation} 8s ease infinite`,
+                  }}
                   style={{ textShadow: '0 0 20px rgba(0,149,255,0.15)' }}
                 >
-                  Rowing
-                </Text>
-                <Text
-                  as="span"
-                  fontSize={["xl", "2xl"]}
-                  fontFamily="logo"
-                  fontWeight="900"
-                  bgGradient="linear(to-r, purple.500, pink.500)"
-                  bgClip="text"
-                  letterSpacing="wider"
-                  textTransform="uppercase"
-                  style={{ textShadow: '0 0 20px rgba(255,0,255,0.15)' }}
-                >
-                  Calculator
+                  Rowing Calculator
                 </Text>
               </Flex>
             </Flex>
