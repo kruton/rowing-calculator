@@ -69,15 +69,12 @@ function WattsPerKg() {
       <FormControl>
         <FormLabel>Body Weight</FormLabel>
         <HStack spacing={4}>
-          <InputGroup>
-            <Input
-              type="number"
-              value={weight}
-              onChange={handleWeightChange}
-              placeholder="Enter weight"
-            />
-            <InputRightAddon>{weightUnit}</InputRightAddon>
-          </InputGroup>
+          <Input
+            type="number"
+            value={weight}
+            onChange={handleWeightChange}
+            placeholder="Enter weight"
+          />
           <Select value={weightUnit} onChange={handleUnitChange} width="100px">
             <option value="kg">kg</option>
             <option value="lbs">lbs</option>
