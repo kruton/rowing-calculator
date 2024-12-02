@@ -17,6 +17,7 @@ import {
   DrawerCloseButton,
   useDisclosure,
   IconButton,
+  Text,
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
 import { extendTheme } from '@chakra-ui/react'
@@ -26,6 +27,9 @@ import TotalTimeCalculator from './components/TotalTimeCalculator'
 import Home from './components/Home'
 
 const theme = extendTheme({
+  fonts: {
+    heading: "'Montserrat', sans-serif",
+  },
   breakpoints: {
     sm: '30em',
     md: '48em',
@@ -98,7 +102,7 @@ function App() {
           <Box minH="100vh" py={[4, 8]} px={[2, 4]}>
             <Container maxW="container.md">
               <VStack spacing={[4, 8]} align="stretch">
-                <Flex align="center" justify="space-between">
+                <Flex align="center" justify="space-between" mb={-2}>
                   {isMobile && (
                     <IconButton
                       icon={<HamburgerIcon />}
@@ -108,9 +112,29 @@ function App() {
                       mr={4}
                     />
                   )}
-                  <Heading as="h1" size={["xl", "2xl"]} color="blue.600" flex="1" textAlign="center">
-                    Rowing Calculator
-                  </Heading>
+                  <Flex flex="1" justify="center" align="center">
+                    <Text
+                      as="span"
+                      fontSize={["xl", "2xl"]}
+                      fontWeight="black"
+                      bgGradient="linear(to-r, blue.400, teal.400)"
+                      bgClip="text"
+                      letterSpacing="tight"
+                      mr={1}
+                    >
+                      Rowing
+                    </Text>
+                    <Text
+                      as="span"
+                      fontSize={["xl", "2xl"]}
+                      fontWeight="black"
+                      bgGradient="linear(to-r, purple.400, pink.400)"
+                      bgClip="text"
+                      letterSpacing="tight"
+                    >
+                      Calculator
+                    </Text>
+                  </Flex>
                 </Flex>
 
                 {!isMobile && <NavigationContent isMobile={false} />}
