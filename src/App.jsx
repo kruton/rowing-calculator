@@ -48,6 +48,18 @@ const theme = extendTheme({
   },
 })
 
+function NavButton({ to, colorScheme, children, isMobile, onClick }) {
+  return (
+    <Button
+      onClick={onClick}
+      colorScheme={colorScheme}
+      width={isMobile ? 'full' : 'auto'}
+    >
+      {children}
+    </Button>
+  )
+}
+
 function NavigationContent({ onNavigate, isMobile }) {
   const navigate = useNavigate()
 
@@ -63,34 +75,34 @@ function NavigationContent({ onNavigate, isMobile }) {
       justify="center"
       wrap="wrap"
     >
-      <Button
+      <NavButton
         onClick={() => handleNavigation('/')}
         colorScheme="blue"
-        width={isMobile ? 'full' : 'auto'}
+        isMobile={isMobile}
       >
         Home
-      </Button>
-      <Button
+      </NavButton>
+      <NavButton
         onClick={() => handleNavigation('/watts-per-kg')}
         colorScheme="teal"
-        width={isMobile ? 'full' : 'auto'}
+        isMobile={isMobile}
       >
         Watts/kg
-      </Button>
-      <Button
+      </NavButton>
+      <NavButton
         onClick={() => handleNavigation('/split-converter')}
         colorScheme="green"
-        width={isMobile ? 'full' : 'auto'}
+        isMobile={isMobile}
       >
         Split Converter
-      </Button>
-      <Button
+      </NavButton>
+      <NavButton
         onClick={() => handleNavigation('/total-time')}
         colorScheme="purple"
-        width={isMobile ? 'full' : 'auto'}
+        isMobile={isMobile}
       >
         Total Time
-      </Button>
+      </NavButton>
     </Flex>
   )
 }
