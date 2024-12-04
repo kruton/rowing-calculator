@@ -18,8 +18,7 @@
     "@emotion/styled": "11.13.5",
     "framer-motion": "10.18.0",
     "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "react-router-dom": "6.28.0"
+    "react-dom": "18.3.1"
   },
   "devDependencies": {
     "@babel/core": "7.26.0",
