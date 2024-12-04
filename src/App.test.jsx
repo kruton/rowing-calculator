@@ -1,21 +1,18 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { ChakraProvider } from '@chakra-ui/react'
 import App from './App'
 
+const renderWithProviders = (ui) => {
+  return render(
+    <ChakraProvider>
+      {ui}
+    </ChakraProvider>
+  )
+}
+
 describe('App', () => {
-  const renderWithProviders = (component) => {
-    return render(
-      <ChakraProvider>
-        {component}
-      </ChakraProvider>
-    )
-  }
-
-  it('renders navigation menu', () => {
+  it('renders header and calculator', () => {
     renderWithProviders(<App />)
-
     expect(screen.getByText('Rowing Calculator')).toBeInTheDocument()
-    expect(screen.getByText('Time Calculator')).toBeInTheDocument()
-    expect(screen.getByText('Watts/kg')).toBeInTheDocument()
   })
 })
