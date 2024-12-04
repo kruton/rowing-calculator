@@ -52,8 +52,8 @@ function AppContent() {
     <Flex width={"100vw"} height={"100vh"} alignContent={"center"} justifyContent={"center"}>
       <Box minH="100vh" py={[4, 8]} px={[2, 4]}>
         <Container maxW="container.md">
-          <VStack spacing={[0, 0]} align="stretch">
-            <Flex flex="1" justify="center" align="center" mr={-2}>
+          <VStack spacing={[4, 4]} align="stretch">
+            <Flex flex="1" justify="center" align="center">
               <Text
                 as="span"
                 fontSize={["xl", "2xl"]}
@@ -85,7 +85,7 @@ function AppContent() {
               w="100%"
               p={[4, 6]}
               borderRadius="lg"
-              boxShadow="md"
+              boxShadow={colorMode === 'dark' ? '0 0 20px rgba(255,255,255,0.1)' : 'md'}
               mx="auto"
             >
               <TimeCalculator />
