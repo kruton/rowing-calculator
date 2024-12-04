@@ -26,7 +26,6 @@ import { HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { extendTheme } from '@chakra-ui/react'
 import WattsPerKg from './components/WattsPerKg'
 import TimeCalculator from './components/TimeCalculator'
-import Home from './components/Home'
 
 const gradientAnimation = keyframes`
   0% { background-position: 0% 50%; }
@@ -96,12 +95,12 @@ function NavigationContent({ onNavigate, isMobile }) {
       align="center"
     >
       <NavButton
-        to="/"
-        onClick={() => handleNavigation('/')}
-        colorScheme="blue"
+        to="/time-calculator"
+        onClick={() => handleNavigation('/time-calculator')}
+        colorScheme="purple"
         isMobile={isMobile}
       >
-        Home
+        Time Calculator
       </NavButton>
       <NavButton
         to="/watts-per-kg"
@@ -110,14 +109,6 @@ function NavigationContent({ onNavigate, isMobile }) {
         isMobile={isMobile}
       >
         Watts/kg
-      </NavButton>
-      <NavButton
-        to="/time-calculator"
-        onClick={() => handleNavigation('/time-calculator')}
-        colorScheme="purple"
-        isMobile={isMobile}
-      >
-        Time Calculator
       </NavButton>
       <IconButton
         aria-label="Toggle color mode"
@@ -197,7 +188,7 @@ function AppContent() {
                   path="/"
                   element={
                     <AnimatedRoute>
-                      <Home isMobile={isMobile} />
+                      <TimeCalculator />
                     </AnimatedRoute>
                   }
                 />
@@ -206,14 +197,6 @@ function AppContent() {
                   element={
                     <AnimatedRoute>
                       <WattsPerKg />
-                    </AnimatedRoute>
-                  }
-                />
-                <Route
-                  path="/time-calculator"
-                  element={
-                    <AnimatedRoute>
-                      <TimeCalculator />
                     </AnimatedRoute>
                   }
                 />

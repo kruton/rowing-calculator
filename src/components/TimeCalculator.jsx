@@ -10,6 +10,8 @@ import {
   HStack,
   Text,
   useColorModeValue,
+  Select,
+  Flex,
 } from '@chakra-ui/react'
 
 function TimeCalculator() {
@@ -20,9 +22,12 @@ function TimeCalculator() {
   const [totalMinutes, setTotalMinutes] = useState('')
   const [totalSeconds, setTotalSeconds] = useState('')
   const [distance, setDistance] = useState('')
+  const [weight, setWeight] = useState('')
+  const [weightUnit, setWeightUnit] = useState('kg')
   const [error, setError] = useState('')
   const [lastTwoInputs, setLastTwoInputs] = useState([])
   const [watts, setWatts] = useState('')
+  const [wattsPerKg, setWattsPerKg] = useState('')
 
   const calculatedFieldColor = useColorModeValue('gray.200', 'gray.700')
 
@@ -86,11 +91,18 @@ function TimeCalculator() {
       if (splitTimeInSeconds > 0) {
         const calculatedWatts = 2.80 / Math.pow(splitTimeInSeconds / 500, 3)
         setWatts(calculatedWatts.toFixed(2))
+
+        // Calculate watts per kilogram
+        const weightInKg = weightUnit === 'lbs' ? Number(weight) * 0.453592 : Number(weight)
+        if (weightInKg > 0) {
+          const calculatedWattsPerKg = calculatedWatts / weightInKg
+          setWattsPerKg(calculatedWattsPerKg.toFixed(2))
+        }
       }
     } catch (err) {
       setError('Invalid input values')
     }
-  }, [lastTwoInputs, splitMinutes, splitSeconds, splitTenths, totalHours, totalMinutes, totalSeconds, distance])
+  }, [lastTwoInputs, splitMinutes, splitSeconds, splitTenths, totalHours, totalMinutes, totalSeconds, distance, weight, weightUnit])
 
   const handleSplitChange = (value, setter) => {
     if (value === '' || (Number(value) >= 0 && Number(value) < 60)) {
@@ -117,6 +129,12 @@ function TimeCalculator() {
     if (value === '' || Number(value) >= 0) {
       setDistance(value)
       updateLastInputs('distance')
+    }
+  }
+
+  const handleWeightChange = (value) => {
+    if (value === '' || Number(value) >= 0) {
+      setWeight(value)
     }
   }
 
@@ -211,9 +229,34 @@ function TimeCalculator() {
         </InputGroup>
       </FormControl>
 
-      {watts && (
+      <FormControl>
+        <FormLabel>Weight</FormLabel>
+        <HStack spacing={2} align="center">
+          <InputGroup>
+            <Input
+              type="number"
+              value={weight}
+              onChange={(e) => handleWeightChange(e.target.value)}
+              placeholder="Enter weight"
+            />
+          </InputGroup>
+          <Select value={weightUnit} onChange={(e) => setWeightUnit(e.target.value)}>
+            <option value="kg">kg</option>
+            <option value="lbs">lbs</option>
+          </Select>
+        </HStack>
+      </FormControl>
+
+      {(watts || wattsPerKg) && (
         <Box p={4} borderRadius="md" borderWidth="1px">
-          <Text fontSize="lg" fontWeight="bold">Watts: {watts}</Text>
+          <Flex justify="center">
+            <Box width="50%" textAlign="center">
+              {watts && <Text fontSize="lg" fontWeight="bold">Watts: {watts}</Text>}
+            </Box>
+            <Box width="50%" textAlign="center">
+              {wattsPerKg && <Text fontSize="lg" fontWeight="bold">Watts/kg: {wattsPerKg}</Text>}
+            </Box>
+          </Flex>
         </Box>
       )}
 
