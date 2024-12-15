@@ -1,18 +1,11 @@
+import { Box, Field, Flex, HStack, Input, Text, VStack } from "@chakra-ui/react";
 import {
-  Box,
-  Flex,
-  FormControl,
-  FormLabel,
-  HStack,
-  Input,
-  InputGroup,
-  InputRightAddon,
-  Select,
-  Text,
-  useColorModeValue,
-  VStack,
-} from "@chakra-ui/react";
+  NativeSelectField,
+  NativeSelectRoot,
+} from "@/components/ui/native-select"
 import { useEffect, useState } from "react";
+import { useColorModeValue } from "./ui/color-mode";
+import { InputGroup } from "./ui/input-group";
 
 function TimeCalculator() {
   const [splitMinutes, setSplitMinutes] = useState("");
@@ -161,10 +154,10 @@ function TimeCalculator() {
 
   return (
     <VStack spacing={6} align="stretch">
-      <FormControl>
-        <FormLabel>Split Time (per 500m)</FormLabel>
-        <HStack spacing={2} align="center">
-          <InputGroup>
+      <Field.Root>
+        <Field.Label>Split Time (per 500m)</Field.Label>
+        <HStack spacing={2} align="center" w="full">
+          <InputGroup w="full">
             <Input
               type="number"
               value={splitMinutes}
@@ -174,7 +167,7 @@ function TimeCalculator() {
             />
           </InputGroup>
           <Text>:</Text>
-          <InputGroup>
+          <InputGroup w="full">
             <Input
               type="number"
               value={splitSeconds}
@@ -184,7 +177,7 @@ function TimeCalculator() {
             />
           </InputGroup>
           <Text>.</Text>
-          <InputGroup>
+          <InputGroup w="full">
             <Input
               type="number"
               value={splitTenths}
@@ -195,12 +188,12 @@ function TimeCalculator() {
             />
           </InputGroup>
         </HStack>
-      </FormControl>
+      </Field.Root>
 
-      <FormControl>
-        <FormLabel>Total Time</FormLabel>
-        <HStack spacing={2} align="center">
-          <InputGroup>
+      <Field.Root>
+        <Field.Label>Total Time</Field.Label>
+        <HStack spacing={2} align="center" w="full">
+          <InputGroup w="full">
             <Input
               type="number"
               value={totalHours}
@@ -210,7 +203,7 @@ function TimeCalculator() {
             />
           </InputGroup>
           <Text>:</Text>
-          <InputGroup>
+          <InputGroup w="full">
             <Input
               type="number"
               value={totalMinutes}
@@ -220,7 +213,7 @@ function TimeCalculator() {
             />
           </InputGroup>
           <Text>:</Text>
-          <InputGroup>
+          <InputGroup w="full">
             <Input
               type="number"
               value={totalSeconds}
@@ -230,11 +223,11 @@ function TimeCalculator() {
             />
           </InputGroup>
         </HStack>
-      </FormControl>
+      </Field.Root>
 
-      <FormControl>
-        <FormLabel>Total Distance</FormLabel>
-        <InputGroup>
+      <Field.Root>
+        <Field.Label>Distance</Field.Label>
+        <InputGroup endElement={<Text>meters</Text>} w="full">
           <Input
             type="number"
             value={distance}
@@ -242,14 +235,13 @@ function TimeCalculator() {
             placeholder="Enter distance"
             bg={getInputBgColor("distance")}
           />
-          <InputRightAddon>meters</InputRightAddon>
         </InputGroup>
-      </FormControl>
+      </Field.Root>
 
-      <FormControl>
-        <FormLabel>Weight</FormLabel>
-        <HStack spacing={2} align="center">
-          <InputGroup>
+      <Field.Root>
+        <Field.Label>Weight</Field.Label>
+        <HStack spacing={2} align="center" w="full">
+          <InputGroup w="full">
             <Input
               type="number"
               value={weight}
@@ -257,31 +249,37 @@ function TimeCalculator() {
               placeholder="Enter weight"
             />
           </InputGroup>
-          <Select value={weightUnit} onChange={(e) => setWeightUnit(e.target.value)}>
-            <option value="kg">kg</option>
-            <option value="lbs">lbs</option>
-          </Select>
+          <NativeSelectRoot value={weightUnit} onChange={(e) => setWeightUnit(e.target.value)}>
+            <NativeSelectField>
+              <option value="kg">kg</option>
+              <option value="lbs">lbs</option>
+            </NativeSelectField>
+          </NativeSelectRoot>
         </HStack>
-      </FormControl>
+      </Field.Root>
 
-      {(watts || wattsPerKg) && (
-        <Box p={4} borderRadius="md" borderWidth="1px">
-          <Flex justify="center">
-            <Box width="50%" textAlign="center">
-              {watts && <Text fontSize="lg" fontWeight="bold">Watts: {watts}</Text>}
-            </Box>
-            <Box width="50%" textAlign="center">
-              {wattsPerKg && <Text fontSize="lg" fontWeight="bold">Watts/kg: {wattsPerKg}</Text>}
-            </Box>
-          </Flex>
-        </Box>
-      )}
+      {
+        (watts || wattsPerKg) && (
+          <Box p={4} borderRadius="md" borderWidth="1px">
+            <Flex justify="center">
+              <Box width="50%" textAlign="center">
+                {watts && <Text fontSize="lg" fontWeight="bold">Watts: {watts}</Text>}
+              </Box>
+              <Box width="50%" textAlign="center">
+                {wattsPerKg && <Text fontSize="lg" fontWeight="bold">Watts/kg: {wattsPerKg}</Text>}
+              </Box>
+            </Flex>
+          </Box>
+        )
+      }
 
-      {error && (
-        <Box p={4} borderRadius="md" borderWidth="1px" borderColor="red.500">
-          <Text color="red.500">{error}</Text>
-        </Box>
-      )}
+      {
+        error && (
+          <Box p={4} borderRadius="md" borderWidth="1px" borderColor="red.500">
+            <Text color="red.500">{error}</Text>
+          </Box>
+        )
+      }
 
       <Box p={4} borderRadius="md" borderWidth="1px">
         <Text fontSize="md">
@@ -289,7 +287,7 @@ function TimeCalculator() {
           <strong>{lastTwoInputs.join(" and ")}</strong>
         </Text>
       </Box>
-    </VStack>
+    </VStack >
   );
 }
 
