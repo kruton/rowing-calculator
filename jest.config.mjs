@@ -1,4 +1,6 @@
-module.exports = {
+import * as structuredClone from '@ungap/structured-clone'; // can be written as import { structuredClone } from '@ungap/structured-clone';  if esModuleInterop flag is used
+
+export default {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/src/setupTests.js"],
   moduleNameMapper: {
@@ -14,4 +16,7 @@ module.exports = {
   transformIgnorePatterns: [
     "/node_modules/(?!@babel)",
   ],
+  globals: {
+    structuredClone: structuredClone.default, // 'structuredClone' is a default export so I access it via .default
+  },
 };
