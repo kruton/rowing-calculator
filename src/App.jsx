@@ -1,27 +1,18 @@
-import {
-  ChakraProvider,
-  Box,
-  Container,
-  IconButton,
-  VStack,
-  Flex,
-  Text,
-  useColorMode,
-} from '@chakra-ui/react'
-import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { keyframes } from '@emotion/react'
-import { extendTheme } from '@chakra-ui/react'
-import TimeCalculator from './components/TimeCalculator'
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { Box, ChakraProvider, Container, Flex, IconButton, Text, useColorMode, VStack } from "@chakra-ui/react";
+import { extendTheme } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
+import TimeCalculator from "./components/TimeCalculator";
 
 const gradientAnimation = keyframes`
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-`
+`;
 
 const theme = extendTheme({
   config: {
-    initialColorMode: 'system',
+    initialColorMode: "system",
     useSystemColorMode: true,
   },
   fonts: {
@@ -29,24 +20,24 @@ const theme = extendTheme({
     logo: "'Orbitron', sans-serif",
   },
   breakpoints: {
-    sm: '30em',
-    md: '48em',
-    lg: '62em',
-    xl: '80em',
-    '2xl': '96em',
+    sm: "30em",
+    md: "48em",
+    lg: "62em",
+    xl: "80em",
+    "2xl": "96em",
   },
   styles: {
     global: (props) => ({
       body: {
-        bg: props.colorMode === 'dark' ? 'gray.800' : 'white',
-        color: props.colorMode === 'dark' ? 'white' : 'gray.800',
+        bg: props.colorMode === "dark" ? "gray.800" : "white",
+        color: props.colorMode === "dark" ? "white" : "gray.800",
       },
     }),
   },
-})
+});
 
 function AppContent() {
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Flex width={"100vw"} height={"100vh"} alignContent={"center"} justifyContent={"center"}>
@@ -67,15 +58,16 @@ function AppContent() {
                 css={{
                   animation: `${gradientAnimation} 8s ease infinite`,
                 }}
-                style={{ textShadow: '0 0 20px rgba(0,149,255,0.15)' }}
+                style={{ textShadow: "0 0 20px rgba(0,149,255,0.15)" }}
               >
                 Rowing Calculator
               </Text>
-              <IconButton ml={5}
+              <IconButton
+                ml={5}
                 aria-label="Toggle color mode"
-                icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+                icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
                 onClick={toggleColorMode}
-                colorScheme={colorMode === 'light' ? 'purple' : 'yellow'}
+                colorScheme={colorMode === "light" ? "purple" : "yellow"}
                 variant="outline"
                 size="md"
               />
@@ -85,7 +77,7 @@ function AppContent() {
               w="100%"
               p={[4, 6]}
               borderRadius="lg"
-              boxShadow={colorMode === 'dark' ? '0 0 20px rgba(255,255,255,0.1)' : 'md'}
+              boxShadow={colorMode === "dark" ? "0 0 20px rgba(255,255,255,0.1)" : "md"}
               mx="auto"
             >
               <TimeCalculator />
@@ -94,7 +86,7 @@ function AppContent() {
         </Container>
       </Box>
     </Flex>
-  )
+  );
 }
 
 function App() {
@@ -102,7 +94,7 @@ function App() {
     <ChakraProvider theme={theme}>
       <AppContent />
     </ChakraProvider>
-  )
+  );
 }
 
-export default App
+export default App;

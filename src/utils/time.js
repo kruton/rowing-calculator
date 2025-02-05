@@ -4,10 +4,10 @@
  * @returns {boolean} - True if valid, false otherwise
  */
 export const isValidNonNegativeInteger = (value) => {
-  if (value === '') return true
-  const num = Number(value)
-  return Number.isInteger(num) && num >= 0
-}
+  if (value === "") return true;
+  const num = Number(value);
+  return Number.isInteger(num) && num >= 0;
+};
 
 /**
  * Validates if a time value is within its maximum allowed value
@@ -16,10 +16,10 @@ export const isValidNonNegativeInteger = (value) => {
  * @returns {boolean} - True if valid, false otherwise
  */
 export const isWithinTimeLimit = (value, maxValue) => {
-  if (value === '') return true
-  const num = Number(value)
-  return num <= maxValue
-}
+  if (value === "") return true;
+  const num = Number(value);
+  return num <= maxValue;
+};
 
 /**
  * Formats a time duration into a string with units
@@ -31,11 +31,11 @@ export const isWithinTimeLimit = (value, maxValue) => {
  */
 export const formatTimeString = ({ hours = 0, minutes = 0, seconds = 0 }) => {
   return [
-    hours > 0 ? `${hours}h` : '',
-    minutes > 0 ? `${minutes}m` : '',
-    `${seconds}s`
-  ].filter(Boolean).join(' ')
-}
+    hours > 0 ? `${hours}h` : "",
+    minutes > 0 ? `${minutes}m` : "",
+    `${seconds}s`,
+  ].filter(Boolean).join(" ");
+};
 
 /**
  * Converts total seconds to hours, minutes, and seconds
@@ -43,12 +43,12 @@ export const formatTimeString = ({ hours = 0, minutes = 0, seconds = 0 }) => {
  * @returns {Object} - Object containing hours, minutes, and seconds
  */
 export const secondsToTime = (totalSeconds) => {
-  const hours = Math.floor(totalSeconds / 3600)
-  const remainingSeconds = totalSeconds % 3600
-  const minutes = Math.floor(remainingSeconds / 60)
-  const seconds = Math.floor(remainingSeconds % 60)
-  return { hours, minutes, seconds }
-}
+  const hours = Math.floor(totalSeconds / 3600);
+  const remainingSeconds = totalSeconds % 3600;
+  const minutes = Math.floor(remainingSeconds / 60);
+  const seconds = Math.floor(remainingSeconds % 60);
+  return { hours, minutes, seconds };
+};
 
 /**
  * Converts hours, minutes, and seconds to total seconds
@@ -59,8 +59,8 @@ export const secondsToTime = (totalSeconds) => {
  * @returns {number} - Total seconds
  */
 export const timeToSeconds = ({ hours = 0, minutes = 0, seconds = 0 }) => {
-  return (hours * 3600) + (minutes * 60) + seconds
-}
+  return (hours * 3600) + (minutes * 60) + seconds;
+};
 
 /**
  * Validates time input and returns appropriate error message
@@ -70,33 +70,35 @@ export const timeToSeconds = ({ hours = 0, minutes = 0, seconds = 0 }) => {
  * @param {string|number} [time.seconds] - Seconds component
  * @returns {string} - Error message if invalid, empty string if valid
  */
-export const validateTimeInput = ({ hours = '', minutes = '', seconds = '' }) => {
+export const validateTimeInput = ({ hours = "", minutes = "", seconds = "" }) => {
   const nums = [
     hours && Number(hours),
     minutes && Number(minutes),
-    seconds && Number(seconds)
-  ].filter(Boolean)
+    seconds && Number(seconds),
+  ].filter(Boolean);
 
   // Check for negative values first
   if (nums.some(num => num < 0)) {
-    return 'Time cannot be negative'
+    return "Time cannot be negative";
   }
 
   // Then check for invalid integers
-  if ((hours && !Number.isInteger(Number(hours))) || 
-      (minutes && !Number.isInteger(Number(minutes))) || 
-      (seconds && !Number.isInteger(Number(seconds)))) {
-    return 'Please enter valid numbers'
+  if (
+    (hours && !Number.isInteger(Number(hours)))
+    || (minutes && !Number.isInteger(Number(minutes)))
+    || (seconds && !Number.isInteger(Number(seconds)))
+  ) {
+    return "Please enter valid numbers";
   }
 
   // Check maximum values
   if (Number(hours) > 23) {
-    return 'Hours must be less than 24'
+    return "Hours must be less than 24";
   }
 
   if (Number(minutes) >= 60 || Number(seconds) >= 60) {
-    return 'Minutes and seconds must be less than 60'
+    return "Minutes and seconds must be less than 60";
   }
 
-  return ''
-}
+  return "";
+};
