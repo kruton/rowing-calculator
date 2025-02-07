@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/rowing.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -11,18 +11,6 @@
     >
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rowing Calculator</title>
-    <script>
-    // Prevent dark mode flashing
-      if (
-        localStorage.getItem("chakra-ui-color-mode") === "dark"
-        || (!("chakra-ui-color-mode" in localStorage)
-          && window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    </script>
   </head>
   <body>
     <div id="root"></div>
