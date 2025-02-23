@@ -4,8 +4,8 @@ import {
   NativeSelectRoot,
 } from "@/components/ui/native-select"
 import { useEffect, useState } from "react";
-import { useColorModeValue } from "@components/ui/color-mode";
-import { InputGroup } from "@components/ui/input-group";
+import { useColorModeValue } from "@/components/ui/color-mode";
+import { InputGroup } from "@/components/ui/input-group";
 
 function TimeCalculator() {
   const [splitMinutes, setSplitMinutes] = useState("");
