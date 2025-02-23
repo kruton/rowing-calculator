@@ -4,8 +4,8 @@ import {
   NativeSelectRoot,
 } from "@/components/ui/native-select"
 import { useEffect, useState } from "react";
-import { useColorModeValue } from "./ui/color-mode";
-import { InputGroup } from "./ui/input-group";
+import { useColorModeValue } from "@components/ui/color-mode";
+import { InputGroup } from "@components/ui/input-group";
 
 function TimeCalculator() {
   const [splitMinutes, setSplitMinutes] = useState("");
@@ -23,6 +23,19 @@ function TimeCalculator() {
   const [wattsPerKg, setWattsPerKg] = useState("");
 
   const calculatedFieldColor = useColorModeValue("gray.200", "gray.700");
+
+  // Retrieve the stored weight unit on component mount
+  useEffect(() => {
+    const storedWeightUnit = localStorage.getItem('weightUnit');
+    if (storedWeightUnit) {
+      setWeightUnit(storedWeightUnit);
+    }
+  }, []);
+
+  // Store the weight unit in local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('weightUnit', weightUnit);
+  }, [weightUnit]);
 
   // Track input changes
   const updateLastInputs = (inputType) => {
