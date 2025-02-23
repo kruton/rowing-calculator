@@ -3,7 +3,7 @@
  * @param {string|number} value - The value to validate
  * @returns {boolean} - True if valid, false otherwise
  */
-export const isValidNonNegativeInteger = (value) => {
+export const isValidNonNegativeInteger = (value: string | number): boolean => {
   if (value === "") return true;
   const num = Number(value);
   return Number.isInteger(num) && num >= 0;
@@ -15,7 +15,7 @@ export const isValidNonNegativeInteger = (value) => {
  * @param {number} maxValue - The maximum allowed value
  * @returns {boolean} - True if valid, false otherwise
  */
-export const isWithinTimeLimit = (value, maxValue) => {
+export const isWithinTimeLimit = (value: string | number, maxValue: number) => {
   if (value === "") return true;
   const num = Number(value);
   return num <= maxValue;
@@ -34,7 +34,9 @@ export const formatTimeString = ({ hours = 0, minutes = 0, seconds = 0 }) => {
     hours > 0 ? `${hours}h` : "",
     minutes > 0 ? `${minutes}m` : "",
     `${seconds}s`,
-  ].filter(Boolean).join(" ");
+  ]
+    .filter(Boolean)
+    .join(" ");
 };
 
 /**
@@ -42,7 +44,7 @@ export const formatTimeString = ({ hours = 0, minutes = 0, seconds = 0 }) => {
  * @param {number} totalSeconds - Total number of seconds
  * @returns {Object} - Object containing hours, minutes, and seconds
  */
-export const secondsToTime = (totalSeconds) => {
+export const secondsToTime = (totalSeconds: number): object => {
   const hours = Math.floor(totalSeconds / 3600);
   const remainingSeconds = totalSeconds % 3600;
   const minutes = Math.floor(remainingSeconds / 60);
@@ -58,8 +60,16 @@ export const secondsToTime = (totalSeconds) => {
  * @param {number} [time.seconds] - Seconds component
  * @returns {number} - Total seconds
  */
-export const timeToSeconds = ({ hours = 0, minutes = 0, seconds = 0 }) => {
-  return (hours * 3600) + (minutes * 60) + seconds;
+export const timeToSeconds = ({
+  hours = 0,
+  minutes = 0,
+  seconds = 0,
+}: {
+  hours?: number;
+  minutes?: number;
+  seconds?: number;
+}): number => {
+  return hours * 3600 + minutes * 60 + seconds;
 };
 
 /**
@@ -70,7 +80,15 @@ export const timeToSeconds = ({ hours = 0, minutes = 0, seconds = 0 }) => {
  * @param {string|number} [time.seconds] - Seconds component
  * @returns {string} - Error message if invalid, empty string if valid
  */
-export const validateTimeInput = ({ hours = "", minutes = "", seconds = "" }) => {
+export const validateTimeInput = ({
+  hours = "",
+  minutes = "",
+  seconds = "",
+}: {
+  hours?: string | number;
+  minutes?: string | number;
+  seconds?: string | number;
+}): string => {
   const nums = [
     hours && Number(hours),
     minutes && Number(minutes),
@@ -78,15 +96,15 @@ export const validateTimeInput = ({ hours = "", minutes = "", seconds = "" }) =>
   ].filter(Boolean);
 
   // Check for negative values first
-  if (nums.some(num => num < 0)) {
+  if (nums.some((num) => typeof num === "number" && num < 0)) {
     return "Time cannot be negative";
   }
 
   // Then check for invalid integers
   if (
-    (hours && !Number.isInteger(Number(hours)))
-    || (minutes && !Number.isInteger(Number(minutes)))
-    || (seconds && !Number.isInteger(Number(seconds)))
+    (hours && !Number.isInteger(Number(hours))) ||
+    (minutes && !Number.isInteger(Number(minutes))) ||
+    (seconds && !Number.isInteger(Number(seconds)))
   ) {
     return "Please enter valid numbers";
   }
