@@ -1,7 +1,7 @@
-import { Provider } from "@/components/ui/provider.jsx";
-import TimeCalculator from "@/components/TimeCalculator.jsx";
-import { WebsiteTitle } from "./components/WebsiteTitle.jsx";
-import { ColorModeButton, useColorMode } from "@/components/ui/color-mode.jsx";
+import { Provider } from "@/components/ui/provider";
+import TimeCalculator from "@/components/TimeCalculator";
+import { WebsiteTitle } from "./components/WebsiteTitle";
+import { ColorModeButton, useColorMode } from "@/components/ui/color-mode";
 import { Box, Container, Flex, VStack } from "@chakra-ui/react";
 
 function AppContent() {
