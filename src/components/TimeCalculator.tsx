@@ -32,6 +32,12 @@ function TimeCalculator() {
 
   const calculatedFieldColor = useColorModeValue("gray.200", "gray.700");
 
+  enum InputType {
+    Split = "split",
+    Total = "total",
+    Distance = "distance",
+  }
+
   // Retrieve the stored weight unit on component mount
   useEffect(() => {
     const storedWeightUnit = localStorage.getItem("weightUnit");
@@ -46,7 +52,7 @@ function TimeCalculator() {
   }, [weightUnit]);
 
   // Track input changes
-  const updateLastInputs = (inputType) => {
+  const updateLastInputs = (inputType: InputType) => {
     setLastTwoInputs((prev) => {
       const filtered = prev.filter((type) => type !== inputType);
       const updated = [...filtered, inputType];
@@ -69,25 +75,27 @@ function TimeCalculator() {
         (totalSeconds ? Number(totalSeconds) : 0);
       const distanceInMeters = Number(distance);
 
-      const inputsToCalculate = ["split", "total", "distance"].filter(
-        (type) => !lastTwoInputs.includes(type)
-      )[0];
+      const inputsToCalculate = [
+        InputType.Split,
+        InputType.Total,
+        InputType.Distance,
+      ].filter((type) => !lastTwoInputs.includes(type))[0];
 
-      if (inputsToCalculate === "split") {
+      if (inputsToCalculate === InputType.Split) {
         setSplitMinutes("");
         setSplitSeconds("");
         setSplitTenths("");
-      } else if (inputsToCalculate === "total") {
+      } else if (inputsToCalculate === InputType.Total) {
         setTotalHours("");
         setTotalMinutes("");
         setTotalSeconds("");
-      } else if (inputsToCalculate === "distance") {
+      } else if (inputsToCalculate === InputType.Distance) {
         setDistance("");
       }
 
       if (
-        lastTwoInputs.includes("split") &&
-        lastTwoInputs.includes("distance") &&
+        lastTwoInputs.includes(InputType.Split) &&
+        lastTwoInputs.includes(InputType.Distance) &&
         splitTimeInSeconds > 0 &&
         distanceInMeters > 0
       ) {
@@ -96,8 +104,8 @@ function TimeCalculator() {
         setTotalMinutes(Math.floor((totalTime % 3600) / 60).toString());
         setTotalSeconds(Math.floor(totalTime % 60).toString());
       } else if (
-        lastTwoInputs.includes("total") &&
-        lastTwoInputs.includes("distance") &&
+        lastTwoInputs.includes(InputType.Total) &&
+        lastTwoInputs.includes(InputType.Distance) &&
         totalTimeInSeconds > 0 &&
         distanceInMeters > 0
       ) {
@@ -106,8 +114,8 @@ function TimeCalculator() {
         setSplitSeconds(Math.floor(splitTime % 60).toString());
         setSplitTenths(Math.floor((splitTime * 10) % 10).toString());
       } else if (
-        lastTwoInputs.includes("split") &&
-        lastTwoInputs.includes("total") &&
+        lastTwoInputs.includes(InputType.Split) &&
+        lastTwoInputs.includes(InputType.Total) &&
         splitTimeInSeconds > 0 &&
         totalTimeInSeconds > 0
       ) {
@@ -145,41 +153,39 @@ function TimeCalculator() {
     weightUnit,
   ]);
 
-  const handleSplitChange = (value, setter) => {
-    if (value === "" || (Number(value) >= 0 && Number(value) < 60)) {
+  interface HandleChangeProps {
+    value: string;
+    setter: React.Dispatch<React.SetStateAction<string>>;
+    name?: InputType;
+    maxValue?: number;
+  }
+
+  const handleChange = ({
+    value,
+    setter,
+    name = InputType.Split,
+    maxValue = 60,
+  }: HandleChangeProps) => {
+    if (value === "" || (Number(value) >= 0 && Number(value) < maxValue)) {
       setter(value);
-      updateLastInputs("split");
+      updateLastInputs(name);
     }
   };
 
-  const handleSplitTenthsChange = (value) => {
-    if (value === "" || (Number(value) >= 0 && Number(value) < 10)) {
-      setSplitTenths(value);
-      updateLastInputs("split");
-    }
-  };
-
-  const handleTotalChange = (value, setter) => {
-    if (value === "" || (Number(value) >= 0 && Number(value) < 60)) {
-      setter(value);
-      updateLastInputs("total");
-    }
-  };
-
-  const handleDistanceChange = (value) => {
+  const handleDistanceChange = (value: string) => {
     if (value === "" || Number(value) >= 0) {
       setDistance(value);
-      updateLastInputs("distance");
+      updateLastInputs(InputType.Distance);
     }
   };
 
-  const handleWeightChange = (value) => {
+  const handleWeightChange = (value: string) => {
     if (value === "" || Number(value) >= 0) {
       setWeight(value);
     }
   };
 
-  const getInputBgColor = (inputType) => {
+  const getInputBgColor = (inputType: InputType) => {
     return lastTwoInputs.includes(inputType)
       ? "transparent"
       : calculatedFieldColor;
@@ -195,10 +201,13 @@ function TimeCalculator() {
               type="number"
               value={splitMinutes}
               onChange={(e) =>
-                handleSplitChange(e.target.value, setSplitMinutes)
+                handleChange({
+                  value: e.target.value,
+                  setter: setSplitMinutes,
+                })
               }
               placeholder="Min"
-              bg={getInputBgColor("split")}
+              bg={getInputBgColor(InputType.Split)}
             />
           </InputGroup>
           <Text>:</Text>
@@ -207,10 +216,13 @@ function TimeCalculator() {
               type="number"
               value={splitSeconds}
               onChange={(e) =>
-                handleSplitChange(e.target.value, setSplitSeconds)
+                handleChange({
+                  value: e.target.value,
+                  setter: setSplitSeconds,
+                })
               }
               placeholder="Sec"
-              bg={getInputBgColor("split")}
+              bg={getInputBgColor(InputType.Split)}
             />
           </InputGroup>
           <Text>.</Text>
@@ -218,9 +230,15 @@ function TimeCalculator() {
             <Input
               type="number"
               value={splitTenths}
-              onChange={(e) => handleSplitTenthsChange(e.target.value)}
+              onChange={(e) =>
+                handleChange({
+                  value: e.target.value,
+                  setter: setSplitTenths,
+                  maxValue: 10,
+                })
+              }
               placeholder="Tenths"
-              bg={getInputBgColor("split")}
+              bg={getInputBgColor(InputType.Split)}
               maxLength={1}
             />
           </InputGroup>
@@ -234,9 +252,15 @@ function TimeCalculator() {
             <Input
               type="number"
               value={totalHours}
-              onChange={(e) => handleTotalChange(e.target.value, setTotalHours)}
+              onChange={(e) =>
+                handleChange({
+                  value: e.target.value,
+                  setter: setTotalHours,
+                  name: InputType.Total,
+                })
+              }
               placeholder="Hr"
-              bg={getInputBgColor("total")}
+              bg={getInputBgColor(InputType.Total)}
             />
           </InputGroup>
           <Text>:</Text>
@@ -245,10 +269,14 @@ function TimeCalculator() {
               type="number"
               value={totalMinutes}
               onChange={(e) =>
-                handleTotalChange(e.target.value, setTotalMinutes)
+                handleChange({
+                  value: e.target.value,
+                  setter: setTotalMinutes,
+                  name: InputType.Total,
+                })
               }
               placeholder="Min"
-              bg={getInputBgColor("total")}
+              bg={getInputBgColor(InputType.Total)}
             />
           </InputGroup>
           <Text>:</Text>
@@ -257,10 +285,14 @@ function TimeCalculator() {
               type="number"
               value={totalSeconds}
               onChange={(e) =>
-                handleTotalChange(e.target.value, setTotalSeconds)
+                handleChange({
+                  value: e.target.value,
+                  setter: setTotalSeconds,
+                  name: InputType.Total,
+                })
               }
               placeholder="Sec"
-              bg={getInputBgColor("total")}
+              bg={getInputBgColor(InputType.Total)}
             />
           </InputGroup>
         </HStack>
@@ -274,7 +306,7 @@ function TimeCalculator() {
             value={distance}
             onChange={(e) => handleDistanceChange(e.target.value)}
             placeholder="Enter distance"
-            bg={getInputBgColor("distance")}
+            bg={getInputBgColor(InputType.Distance)}
           />
         </InputGroup>
       </Field.Root>
