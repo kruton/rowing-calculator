@@ -290,11 +290,11 @@ function TimeCalculator() {
               placeholder="Enter weight"
             />
           </InputGroup>
-          <NativeSelectRoot
-            value={weightUnit}
-            onChange={(e) => setWeightUnit(e.target.value)}
-          >
-            <NativeSelectField>
+          <NativeSelectRoot>
+            <NativeSelectField
+              value={weightUnit}
+              onChange={(e) => setWeightUnit(e.target.value)}
+            >
               <option value="kg">kg</option>
               <option value="lbs">lbs</option>
             </NativeSelectField>
