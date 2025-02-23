@@ -9,10 +9,11 @@ export default {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
   transform: {
+    "^.+\.tsx?$": ["ts-jest",{}],
     "^.+\\.(js|jsx)$": "babel-jest",
   },
-  moduleFileExtensions: ["js", "jsx"],
-  testMatch: ["**/__tests__/**/*.js?(x)", "**/?(*.)+(spec|test).js?(x)"],
+  moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
+  testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
   transformIgnorePatterns: [
     "/node_modules/(?!@babel)",
   ],
