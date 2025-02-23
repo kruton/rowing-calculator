@@ -1,7 +1,8 @@
 import { Text } from "@chakra-ui/react";
-import './WebsiteTitle.css';
+import "./WebsiteTitle.css";
 
-export const WebsiteTitle = () => <Text
+export const WebsiteTitle = () => (
+  <Text
     as="span"
     fontSize={["xl", "2xl"]}
     fontFamily="logo"
@@ -16,6 +17,7 @@ export const WebsiteTitle = () => <Text
     bgClip="text"
     animation="gradientAnimation"
     style={{ textShadow: "0 0 20px rgba(0,149,255,0.15)" }}
->
+  >
     Rowing Calculator
-</Text>;
+  </Text>
+);
