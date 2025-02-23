@@ -1,8 +1,16 @@
-import { Box, Field, Flex, HStack, Input, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Field,
+  Flex,
+  HStack,
+  Input,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import {
   NativeSelectField,
   NativeSelectRoot,
-} from "@/components/ui/native-select"
+} from "@/components/ui/native-select";
 import { useEffect, useState } from "react";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { InputGroup } from "@/components/ui/input-group";
@@ -18,7 +26,7 @@ function TimeCalculator() {
   const [weight, setWeight] = useState("");
   const [weightUnit, setWeightUnit] = useState("kg");
   const [error, setError] = useState("");
-  const [lastTwoInputs, setLastTwoInputs] = useState([]);
+  const [lastTwoInputs, setLastTwoInputs] = useState<string[]>([]);
   const [watts, setWatts] = useState("");
   const [wattsPerKg, setWattsPerKg] = useState("");
 
@@ -26,7 +34,7 @@ function TimeCalculator() {
 
   // Retrieve the stored weight unit on component mount
   useEffect(() => {
-    const storedWeightUnit = localStorage.getItem('weightUnit');
+    const storedWeightUnit = localStorage.getItem("weightUnit");
     if (storedWeightUnit) {
       setWeightUnit(storedWeightUnit);
     }
@@ -34,13 +42,13 @@ function TimeCalculator() {
 
   // Store the weight unit in local storage whenever it changes
   useEffect(() => {
-    localStorage.setItem('weightUnit', weightUnit);
+    localStorage.setItem("weightUnit", weightUnit);
   }, [weightUnit]);
 
   // Track input changes
   const updateLastInputs = (inputType) => {
-    setLastTwoInputs(prev => {
-      const filtered = prev.filter(type => type !== inputType);
+    setLastTwoInputs((prev) => {
+      const filtered = prev.filter((type) => type !== inputType);
       const updated = [...filtered, inputType];
       return updated.slice(-2);
     });
@@ -51,16 +59,18 @@ function TimeCalculator() {
     if (lastTwoInputs.length < 2) return;
 
     try {
-      const splitTimeInSeconds = (splitMinutes ? Number(splitMinutes) * 60 : 0)
-        + (splitSeconds ? Number(splitSeconds) : 0)
-        + (splitTenths ? Number(splitTenths) / 10 : 0);
-      const totalTimeInSeconds = (totalHours ? Number(totalHours) * 3600 : 0)
-        + (totalMinutes ? Number(totalMinutes) * 60 : 0)
-        + (totalSeconds ? Number(totalSeconds) : 0);
+      const splitTimeInSeconds =
+        (splitMinutes ? Number(splitMinutes) * 60 : 0) +
+        (splitSeconds ? Number(splitSeconds) : 0) +
+        (splitTenths ? Number(splitTenths) / 10 : 0);
+      const totalTimeInSeconds =
+        (totalHours ? Number(totalHours) * 3600 : 0) +
+        (totalMinutes ? Number(totalMinutes) * 60 : 0) +
+        (totalSeconds ? Number(totalSeconds) : 0);
       const distanceInMeters = Number(distance);
 
       const inputsToCalculate = ["split", "total", "distance"].filter(
-        type => !lastTwoInputs.includes(type),
+        (type) => !lastTwoInputs.includes(type)
       )[0];
 
       if (inputsToCalculate === "split") {
@@ -76,36 +86,44 @@ function TimeCalculator() {
       }
 
       if (
-        lastTwoInputs.includes("split") && lastTwoInputs.includes("distance")
-        && splitTimeInSeconds > 0 && distanceInMeters > 0
+        lastTwoInputs.includes("split") &&
+        lastTwoInputs.includes("distance") &&
+        splitTimeInSeconds > 0 &&
+        distanceInMeters > 0
       ) {
         const totalTime = (splitTimeInSeconds / 500) * distanceInMeters;
         setTotalHours(Math.floor(totalTime / 3600).toString());
         setTotalMinutes(Math.floor((totalTime % 3600) / 60).toString());
         setTotalSeconds(Math.floor(totalTime % 60).toString());
       } else if (
-        lastTwoInputs.includes("total") && lastTwoInputs.includes("distance")
-        && totalTimeInSeconds > 0 && distanceInMeters > 0
+        lastTwoInputs.includes("total") &&
+        lastTwoInputs.includes("distance") &&
+        totalTimeInSeconds > 0 &&
+        distanceInMeters > 0
       ) {
         const splitTime = (totalTimeInSeconds / distanceInMeters) * 500;
         setSplitMinutes(Math.floor(splitTime / 60).toString());
         setSplitSeconds(Math.floor(splitTime % 60).toString());
         setSplitTenths(Math.floor((splitTime * 10) % 10).toString());
       } else if (
-        lastTwoInputs.includes("split") && lastTwoInputs.includes("total")
-        && splitTimeInSeconds > 0 && totalTimeInSeconds > 0
+        lastTwoInputs.includes("split") &&
+        lastTwoInputs.includes("total") &&
+        splitTimeInSeconds > 0 &&
+        totalTimeInSeconds > 0
       ) {
-        const calculatedDistance = (totalTimeInSeconds / splitTimeInSeconds) * 500;
+        const calculatedDistance =
+          (totalTimeInSeconds / splitTimeInSeconds) * 500;
         setDistance(Math.round(calculatedDistance).toString());
       }
 
       // Corrected watts calculation using split time in seconds
       if (splitTimeInSeconds > 0) {
-        const calculatedWatts = 2.80 / Math.pow(splitTimeInSeconds / 500, 3);
+        const calculatedWatts = 2.8 / Math.pow(splitTimeInSeconds / 500, 3);
         setWatts(calculatedWatts.toFixed(2));
 
         // Calculate watts per kilogram
-        const weightInKg = weightUnit === "lbs" ? Number(weight) * 0.453592 : Number(weight);
+        const weightInKg =
+          weightUnit === "lbs" ? Number(weight) * 0.453592 : Number(weight);
         if (weightInKg > 0) {
           const calculatedWattsPerKg = calculatedWatts / weightInKg;
           setWattsPerKg(calculatedWattsPerKg.toFixed(2));
@@ -162,19 +180,23 @@ function TimeCalculator() {
   };
 
   const getInputBgColor = (inputType) => {
-    return lastTwoInputs.includes(inputType) ? "transparent" : calculatedFieldColor;
+    return lastTwoInputs.includes(inputType)
+      ? "transparent"
+      : calculatedFieldColor;
   };
 
   return (
-    <VStack spacing={6} align="stretch">
+    <VStack gap={6} align="stretch">
       <Field.Root>
         <Field.Label>Split Time (per 500m)</Field.Label>
-        <HStack spacing={2} align="center" w="full">
+        <HStack gap={2} align="center" w="full">
           <InputGroup w="full">
             <Input
               type="number"
               value={splitMinutes}
-              onChange={(e) => handleSplitChange(e.target.value, setSplitMinutes)}
+              onChange={(e) =>
+                handleSplitChange(e.target.value, setSplitMinutes)
+              }
               placeholder="Min"
               bg={getInputBgColor("split")}
             />
@@ -184,7 +206,9 @@ function TimeCalculator() {
             <Input
               type="number"
               value={splitSeconds}
-              onChange={(e) => handleSplitChange(e.target.value, setSplitSeconds)}
+              onChange={(e) =>
+                handleSplitChange(e.target.value, setSplitSeconds)
+              }
               placeholder="Sec"
               bg={getInputBgColor("split")}
             />
@@ -205,7 +229,7 @@ function TimeCalculator() {
 
       <Field.Root>
         <Field.Label>Total Time</Field.Label>
-        <HStack spacing={2} align="center" w="full">
+        <HStack gap={2} align="center" w="full">
           <InputGroup w="full">
             <Input
               type="number"
@@ -220,7 +244,9 @@ function TimeCalculator() {
             <Input
               type="number"
               value={totalMinutes}
-              onChange={(e) => handleTotalChange(e.target.value, setTotalMinutes)}
+              onChange={(e) =>
+                handleTotalChange(e.target.value, setTotalMinutes)
+              }
               placeholder="Min"
               bg={getInputBgColor("total")}
             />
@@ -230,7 +256,9 @@ function TimeCalculator() {
             <Input
               type="number"
               value={totalSeconds}
-              onChange={(e) => handleTotalChange(e.target.value, setTotalSeconds)}
+              onChange={(e) =>
+                handleTotalChange(e.target.value, setTotalSeconds)
+              }
               placeholder="Sec"
               bg={getInputBgColor("total")}
             />
@@ -253,7 +281,7 @@ function TimeCalculator() {
 
       <Field.Root>
         <Field.Label>Weight</Field.Label>
-        <HStack spacing={2} align="center" w="full">
+        <HStack gap={2} align="center" w="full">
           <InputGroup w="full">
             <Input
               type="number"
@@ -262,7 +290,10 @@ function TimeCalculator() {
               placeholder="Enter weight"
             />
           </InputGroup>
-          <NativeSelectRoot value={weightUnit} onChange={(e) => setWeightUnit(e.target.value)}>
+          <NativeSelectRoot
+            value={weightUnit}
+            onChange={(e) => setWeightUnit(e.target.value)}
+          >
             <NativeSelectField>
               <option value="kg">kg</option>
               <option value="lbs">lbs</option>
@@ -271,36 +302,40 @@ function TimeCalculator() {
         </HStack>
       </Field.Root>
 
-      {
-        (watts || wattsPerKg) && (
-          <Box p={4} borderRadius="md" borderWidth="1px">
-            <Flex justify="center">
-              <Box width="50%" textAlign="center">
-                {watts && <Text fontSize="lg" fontWeight="bold">Watts: {watts}</Text>}
-              </Box>
-              <Box width="50%" textAlign="center">
-                {wattsPerKg && <Text fontSize="lg" fontWeight="bold">Watts/kg: {wattsPerKg}</Text>}
-              </Box>
-            </Flex>
-          </Box>
-        )
-      }
+      {(watts || wattsPerKg) && (
+        <Box p={4} borderRadius="md" borderWidth="1px">
+          <Flex justify="center">
+            <Box width="50%" textAlign="center">
+              {watts && (
+                <Text fontSize="lg" fontWeight="bold">
+                  Watts: {watts}
+                </Text>
+              )}
+            </Box>
+            <Box width="50%" textAlign="center">
+              {wattsPerKg && (
+                <Text fontSize="lg" fontWeight="bold">
+                  Watts/kg: {wattsPerKg}
+                </Text>
+              )}
+            </Box>
+          </Flex>
+        </Box>
+      )}
 
-      {
-        error && (
-          <Box p={4} borderRadius="md" borderWidth="1px" borderColor="red.500">
-            <Text color="red.500">{error}</Text>
-          </Box>
-        )
-      }
+      {error && (
+        <Box p={4} borderRadius="md" borderWidth="1px" borderColor="red.500">
+          <Text color="red.500">{error}</Text>
+        </Box>
+      )}
 
       <Box p={4} borderRadius="md" borderWidth="1px">
         <Text fontSize="md">
-          Enter any two values and the third will be calculated automatically. Currently tracking:{" "}
-          <strong>{lastTwoInputs.join(" and ")}</strong>
+          Enter any two values and the third will be calculated automatically.
+          Currently tracking: <strong>{lastTwoInputs.join(" and ")}</strong>
         </Text>
       </Box>
-    </VStack >
+    </VStack>
   );
 }
 
