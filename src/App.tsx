@@ -3,6 +3,7 @@ import TimeCalculator from "@/components/TimeCalculator";
 import { WebsiteTitle } from "./components/WebsiteTitle";
 import { ColorModeButton, useColorMode } from "@/components/ui/color-mode";
 import { Box, Container, Flex, VStack } from "@chakra-ui/react";
+import "./App.css";
 
 function AppContent() {
   const { colorMode } = useColorMode();

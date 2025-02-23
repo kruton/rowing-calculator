@@ -1,5 +1,4 @@
 import { Text } from "@chakra-ui/react";
-import "./WebsiteTitle.css";
 
 export const WebsiteTitle = () => (
   <Text
