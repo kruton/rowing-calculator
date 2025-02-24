@@ -2,6 +2,15 @@
 
 A comprehensive web application for rowing performance calculations. Built with React and Chakra UI, this calculator helps rowers and coaches calculate various performance metrics.
 
+## Project Status
+
+This project uses [pnpm](https://pnpm.io/) for package management and Node.js 22.x as the Long Term Support (LTS) version.
+
+## CI/CD Pipeline
+
+- **Tests**: The pipeline tests the application on multiple Node.js versions including 20.x and 22.x.
+- **Deploy**: On successful push to the `main` branch, the project is built and deployed to GitHub Pages using the latest stable Node.js version (22.x).
+
 ## Features
 
 - **Split Time Calculator**: Convert total time and distance into 500m split times
@@ -16,25 +25,28 @@ Visit [Rowing Calculator](https://kruton.github.io/rowing-calculator) to try it 
 
 ### Prerequisites
 
-- Node.js (v16.x or v18.x)
-- npm
+- Node.js (v22.x)
+- pnpm
 
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/kruton/rowing-calculator.git
    cd rowing-calculator
    ```
 
 2. Install dependencies:
+
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. Start the development server:
+
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 4. Open [http://localhost:5175](http://localhost:5175) to view it in your browser
@@ -42,8 +54,9 @@ Visit [Rowing Calculator](https://kruton.github.io/rowing-calculator) to try it 
 ## Testing
 
 Run the test suite:
+
 ```bash
-npm test
+pnpm test
 ```
 
 ## Built With
