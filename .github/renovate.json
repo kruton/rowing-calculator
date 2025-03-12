@@ -10,8 +10,10 @@
   "packageRules": [
     {
       "matchUpdateTypes": [
+        "digest",
         "minor",
-        "patch"
+        "patch",
+        "pin"
       ],
       "matchCurrentVersion": "!/^0/",
       "automerge": true,
