@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/rowing.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Orbitron:wght@400;600;900&display=swap"
-      rel="stylesheet"
-    >
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rowing Calculator</title>
-    <script>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="./src/assets/rowing.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Orbitron:wght@400;600;900&display=swap"
+    rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rowing Calculator</title>
+  <script>
     // Prevent dark mode flashing
-      if (
-        localStorage.getItem("theme") === "dark"
-        || (!("theme" in localStorage)
-          && window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("light");
-      }
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "901cf15dbe3c498cb69049151c5ea07c"}'></script>
-  </body>
+    if (
+      localStorage.getItem("theme") === "dark"
+      || (!("theme" in localStorage)
+        && window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("light");
+    }
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "901cf15dbe3c498cb69049151c5ea07c"}'></script>
+</body>
+
 </html>
