@@ -2,7 +2,7 @@ import { Provider } from "@/components/ui/provider";
 import TimeCalculator from "@/components/TimeCalculator";
 import { WebsiteTitle } from "./components/WebsiteTitle";
 import { ColorModeButton, useColorMode } from "@/components/ui/color-mode";
-import { Box, Container, Flex, VStack } from "@chakra-ui/react";
+import { Box, Container, Flex, Text, VStack } from "@chakra-ui/react";
 import RowingQuips from "@/components/RowingQuips";
 import "./App.css";
 
@@ -38,6 +38,19 @@ function AppContent() {
               mx="auto"
             >
               <TimeCalculator />
+            </Box>
+
+            <Box textAlign="center" mt={6} mb={2}>
+              <Text
+                fontSize="xs"
+                color={colorMode === "dark" ? "whiteAlpha.600" : "gray.500"}
+                textTransform="uppercase"
+                letterSpacing="wider"
+                fontWeight="medium"
+                fontFamily="heading"
+              >
+                Made by Kenny Root
+              </Text>
             </Box>
           </VStack>
         </Container>
