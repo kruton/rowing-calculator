@@ -16,10 +16,24 @@ function AppContent() {
     >
       <Box minH="100vh" py={[4, 8]} px={[2, 4]}>
         <Container maxW="container.md">
-          <VStack gap={[4, 4]} align="stretch">
+          <VStack gap={0} align="stretch">
             <Flex flex="1" justify="center" align="center">
-              <WebsiteTitle />
+              <WebsiteTitle>RowCalc.com</WebsiteTitle>
               <ColorModeButton mx={2} />
+            </Flex>
+
+            <Flex mb={4} flex="1" justify="center" align="center">
+              <Box
+                as="span"
+                fontSize="md"
+                fontFamily="heading"
+                textTransform="uppercase"
+                letterSpacing="wider"
+                fontWeight="medium"
+                color="gray.500"
+              >
+                Your fast rowing calculator
+              </Box>
             </Flex>
 
             <Box

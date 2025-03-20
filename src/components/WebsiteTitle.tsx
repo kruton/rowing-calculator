@@ -1,9 +1,15 @@
 import { Text } from "@chakra-ui/react";
+import { ReactNode } from "react";
 
-export const WebsiteTitle = () => (
+interface WebsiteTitleProps {
+  children: ReactNode;
+  fontSize?: string[] | string;
+}
+
+export const WebsiteTitle = ({ children, fontSize = ["xl", "2xl"] }: WebsiteTitleProps) => (
   <Text
     as="span"
-    fontSize={["xl", "2xl"]}
+    fontSize={fontSize}
     fontFamily="logo"
     fontWeight="900"
     letterSpacing="wider"
@@ -17,6 +23,6 @@ export const WebsiteTitle = () => (
     animation="gradientAnimation"
     style={{ textShadow: "0 0 20px rgba(0,149,255,0.15)" }}
   >
-    Rowing Calculator
+    {children}
   </Text>
 );
