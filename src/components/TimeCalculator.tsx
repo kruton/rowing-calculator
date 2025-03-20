@@ -228,17 +228,8 @@ function TimeCalculator() {
   };
 
   const getInputBgColor = (inputType: InputType) => {
-    if (lastTwoInputs.includes(inputType)) {
-      return "transparent";
-    }
-
-    // Special handling for Split/Watts relationship
-    if ((inputType === InputType.Split && lastTwoInputs.includes(InputType.Watts)) ||
-      (inputType === InputType.Watts && lastTwoInputs.includes(InputType.Split))) {
-      return "transparent";
-    }
-
-    return calculatedFieldColor;
+    return lastTwoInputs.includes(inputType)
+      ? "transparent" : calculatedFieldColor;
   };
 
   return (
