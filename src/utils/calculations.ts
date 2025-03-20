@@ -39,3 +39,11 @@ export const calculateWattsPerKg = ({
     unit === WeightUnit.Pounds ? poundsToKilograms(weight) : weight;
   return watts / weightInKg;
 };
+
+export const splitSecondsToWatts = (splitTimeInSeconds: number) => {
+  return 2.8 / Math.pow(splitTimeInSeconds / 500, 3);
+}
+
+export const wattsToSplitSeconds = (watts: number) => {
+  return 500 * Math.cbrt(2.8 / watts);
+}

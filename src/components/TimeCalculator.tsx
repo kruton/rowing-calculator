@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { InputGroup } from "@/components/ui/input-group";
+import { splitSecondsToWatts } from "@/utils/calculations";
 
 function TimeCalculator() {
   const [splitMinutes, setSplitMinutes] = useState("");
@@ -36,6 +37,7 @@ function TimeCalculator() {
     Split = "split",
     Total = "total",
     Distance = "distance",
+    Watts = "watts",
   }
 
   // Retrieve the stored weight unit on component mount
@@ -54,7 +56,17 @@ function TimeCalculator() {
   // Track input changes
   const updateLastInputs = (inputType: InputType) => {
     setLastTwoInputs((prev) => {
-      const filtered = prev.filter((type) => type !== inputType);
+      // If the new input is Split and Watts exists in previous inputs, or
+      // if the new input is Watts and Split exists, remove the conflicting one
+      const isConflicting =
+        (inputType === InputType.Split && prev.includes(InputType.Watts)) ||
+        (inputType === InputType.Watts && prev.includes(InputType.Split));
+
+      let filtered = prev.filter((type) =>
+        type !== inputType &&
+        !(isConflicting && (type === InputType.Split || type === InputType.Watts))
+      );
+
       const updated = [...filtered, inputType];
       return updated.slice(-2);
     });
@@ -79,18 +91,21 @@ function TimeCalculator() {
         InputType.Split,
         InputType.Total,
         InputType.Distance,
-      ].filter((type) => !lastTwoInputs.includes(type))[0];
+        InputType.Watts,
+      ].filter((type) => !lastTwoInputs.includes(type));
 
-      if (inputsToCalculate === InputType.Split) {
+      if (inputsToCalculate.includes(InputType.Split)) {
         setSplitMinutes("");
         setSplitSeconds("");
         setSplitTenths("");
-      } else if (inputsToCalculate === InputType.Total) {
+      } else if (inputsToCalculate.includes(InputType.Total)) {
         setTotalHours("");
         setTotalMinutes("");
         setTotalSeconds("");
-      } else if (inputsToCalculate === InputType.Distance) {
+      } else if (inputsToCalculate.includes(InputType.Distance)) {
         setDistance("");
+      } else if (inputsToCalculate.includes(InputType.Watts)) {
+        setWatts("");
       }
 
       if (
@@ -124,10 +139,20 @@ function TimeCalculator() {
         setDistance(Math.round(calculatedDistance).toString());
       }
 
-      // Corrected watts calculation using split time in seconds
-      if (splitTimeInSeconds > 0) {
-        const calculatedWatts = 2.8 / Math.pow(splitTimeInSeconds / 500, 3);
+      if (splitTimeInSeconds > 0 && !watts) {
+        const calculatedWatts = splitSecondsToWatts(splitTimeInSeconds);
         setWatts(calculatedWatts.toFixed(2));
+      }
+
+      if (watts && splitTimeInSeconds === 0) {
+        const calculatedSplitTime = splitSecondsToWatts(Number(watts));
+        setSplitMinutes(Math.floor(calculatedSplitTime / 60).toString());
+        setSplitSeconds(Math.floor(calculatedSplitTime % 60).toString());
+        setSplitTenths(Math.floor((calculatedSplitTime * 10) % 10).toString());
+      }
+
+      if (watts && Number(watts) > 0) {
+        const calculatedWatts = Number(watts);
 
         // Calculate watts per kilogram
         const weightInKg =
@@ -179,6 +204,13 @@ function TimeCalculator() {
     }
   };
 
+  const handleWattsChange = (value: string) => {
+    if (value === "" || Number(value) >= 0) {
+      setWatts(value);
+      updateLastInputs(InputType.Watts);
+    }
+  };
+
   const handleWeightChange = (value: string) => {
     if (value === "" || Number(value) >= 0) {
       setWeight(value);
@@ -186,9 +218,17 @@ function TimeCalculator() {
   };
 
   const getInputBgColor = (inputType: InputType) => {
-    return lastTwoInputs.includes(inputType)
-      ? "transparent"
-      : calculatedFieldColor;
+    if (lastTwoInputs.includes(inputType)) {
+      return "transparent";
+    }
+
+    // Special handling for Split/Watts relationship
+    if ((inputType === InputType.Split && lastTwoInputs.includes(InputType.Watts)) ||
+      (inputType === InputType.Watts && lastTwoInputs.includes(InputType.Split))) {
+      return "transparent";
+    }
+
+    return calculatedFieldColor;
   };
 
   return (
@@ -199,6 +239,7 @@ function TimeCalculator() {
           <InputGroup w="full">
             <Input
               type="number"
+              inputMode="numeric"
               value={splitMinutes}
               onChange={(e) =>
                 handleChange({
@@ -214,6 +255,7 @@ function TimeCalculator() {
           <InputGroup w="full">
             <Input
               type="number"
+              inputMode="numeric"
               value={splitSeconds}
               onChange={(e) =>
                 handleChange({
@@ -229,6 +271,7 @@ function TimeCalculator() {
           <InputGroup w="full">
             <Input
               type="number"
+              inputMode="numeric"
               value={splitTenths}
               onChange={(e) =>
                 handleChange({
@@ -251,6 +294,7 @@ function TimeCalculator() {
           <InputGroup w="full">
             <Input
               type="number"
+              inputMode="numeric"
               value={totalHours}
               onChange={(e) =>
                 handleChange({
@@ -267,6 +311,7 @@ function TimeCalculator() {
           <InputGroup w="full">
             <Input
               type="number"
+              inputMode="numeric"
               value={totalMinutes}
               onChange={(e) =>
                 handleChange({
@@ -283,6 +328,7 @@ function TimeCalculator() {
           <InputGroup w="full">
             <Input
               type="number"
+              inputMode="numeric"
               value={totalSeconds}
               onChange={(e) =>
                 handleChange({
@@ -303,6 +349,7 @@ function TimeCalculator() {
         <InputGroup endElement={<Text>meters</Text>} w="full">
           <Input
             type="number"
+            inputMode="numeric"
             value={distance}
             onChange={(e) => handleDistanceChange(e.target.value)}
             placeholder="Enter distance"
@@ -312,11 +359,33 @@ function TimeCalculator() {
       </Field.Root>
 
       <Field.Root>
+        <Field.Label>Watts</Field.Label>
+        <HStack gap={2} align="center" w="full">
+          <InputGroup w="full">
+            <Input
+              type="number"
+              inputMode="numeric"
+              value={watts}
+              onChange={(e) => handleWattsChange(e.target.value)}
+              placeholder="Enter watts"
+              bg={getInputBgColor(InputType.Watts)}
+            />
+          </InputGroup>
+          <Box w="full" textAlign="center">
+            <Text fontSize="lg" fontWeight="bold">
+              Watts/kg: {wattsPerKg}
+            </Text>
+          </Box>
+        </HStack>
+      </Field.Root>
+
+      <Field.Root>
         <Field.Label>Weight</Field.Label>
         <HStack gap={2} align="center" w="full">
           <InputGroup w="full">
             <Input
               type="number"
+              inputMode="numeric"
               value={weight}
               onChange={(e) => handleWeightChange(e.target.value)}
               placeholder="Enter weight"
@@ -333,27 +402,6 @@ function TimeCalculator() {
           </NativeSelectRoot>
         </HStack>
       </Field.Root>
-
-      {(watts || wattsPerKg) && (
-        <Box p={4} borderRadius="md" borderWidth="1px">
-          <Flex justify="center">
-            <Box width="50%" textAlign="center">
-              {watts && (
-                <Text fontSize="lg" fontWeight="bold">
-                  Watts: {watts}
-                </Text>
-              )}
-            </Box>
-            <Box width="50%" textAlign="center">
-              {wattsPerKg && (
-                <Text fontSize="lg" fontWeight="bold">
-                  Watts/kg: {wattsPerKg}
-                </Text>
-              )}
-            </Box>
-          </Flex>
-        </Box>
-      )}
 
       {error && (
         <Box p={4} borderRadius="md" borderWidth="1px" borderColor="red.500">
