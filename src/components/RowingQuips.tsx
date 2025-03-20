@@ -1,0 +1,40 @@
+import { useMemo } from 'react';
+import { Box, Container, Flex, VStack } from "@chakra-ui/react";
+
+const RowingQuips = () => {
+    const quips = [
+        "For when your brain is as tired as your arms",
+        "Row, row, row your splits... gently down the screen",
+        "Making math easier than your last 2K test",
+        "Because counting strokes is hard enough",
+        "Helping you calculate how much you'll hurt tomorrow",
+        "The only calculator that understands your pain",
+        "Splits faster than your coach's expectations",
+        "For calculations smoother than your technique",
+        "Math that works even when your legs don't",
+        "Rowing calculators: the original ergometer",
+        "When your brain is too oxygen-deprived to do math",
+        "Calculations faster than your personal best"
+    ];
+
+    const randomQuip = useMemo(() =>
+        quips[Math.floor(Math.random() * quips.length)],
+        []
+    );
+
+    return (
+        <Box
+            as="span"
+            fontSize="md"
+            fontFamily="heading"
+            textTransform="uppercase"
+            letterSpacing="wider"
+            fontWeight="medium"
+            color="gray.500"
+        >
+            {randomQuip}
+        </Box>
+    );
+};
+
+export default RowingQuips;

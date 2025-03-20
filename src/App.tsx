@@ -3,6 +3,7 @@ import TimeCalculator from "@/components/TimeCalculator";
 import { WebsiteTitle } from "./components/WebsiteTitle";
 import { ColorModeButton, useColorMode } from "@/components/ui/color-mode";
 import { Box, Container, Flex, VStack } from "@chakra-ui/react";
+import RowingQuips from "@/components/RowingQuips";
 import "./App.css";
 
 function AppContent() {
@@ -23,17 +24,7 @@ function AppContent() {
             </Flex>
 
             <Flex mb={4} flex="1" justify="center" align="center">
-              <Box
-                as="span"
-                fontSize="md"
-                fontFamily="heading"
-                textTransform="uppercase"
-                letterSpacing="wider"
-                fontWeight="medium"
-                color="gray.500"
-              >
-                Your fast rowing calculator
-              </Box>
+              <RowingQuips />
             </Flex>
 
             <Box
