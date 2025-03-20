@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { InputGroup } from "@/components/ui/input-group";
-import { splitSecondsToWatts } from "@/utils/calculations";
+import { splitSecondsToWatts, wattsToSplitSeconds } from "@/utils/calculations";
 
 function TimeCalculator() {
   const [splitMinutes, setSplitMinutes] = useState("");
@@ -77,7 +77,11 @@ function TimeCalculator() {
     if (lastTwoInputs.length < 2) return;
 
     try {
-      const splitTimeInSeconds =
+      const myWatts = Number(watts);
+      const splitSecondsFromWatts = lastTwoInputs.includes(InputType.Watts) ?
+        wattsToSplitSeconds(myWatts) : undefined;
+
+      const splitTimeInSeconds = splitSecondsFromWatts ? splitSecondsFromWatts :
         (splitMinutes ? Number(splitMinutes) * 60 : 0) +
         (splitSeconds ? Number(splitSeconds) : 0) +
         (splitTenths ? Number(splitTenths) / 10 : 0);
@@ -98,26 +102,30 @@ function TimeCalculator() {
         setSplitMinutes("");
         setSplitSeconds("");
         setSplitTenths("");
-      } else if (inputsToCalculate.includes(InputType.Total)) {
+      }
+      if (inputsToCalculate.includes(InputType.Total)) {
         setTotalHours("");
         setTotalMinutes("");
         setTotalSeconds("");
-      } else if (inputsToCalculate.includes(InputType.Distance)) {
+      }
+      if (inputsToCalculate.includes(InputType.Distance)) {
         setDistance("");
-      } else if (inputsToCalculate.includes(InputType.Watts)) {
+      }
+      if (inputsToCalculate.includes(InputType.Watts)) {
         setWatts("");
       }
 
       if (
-        lastTwoInputs.includes(InputType.Split) &&
+        (lastTwoInputs.includes(InputType.Split)
+          || lastTwoInputs.includes(InputType.Watts)) &&
         lastTwoInputs.includes(InputType.Distance) &&
         splitTimeInSeconds > 0 &&
         distanceInMeters > 0
       ) {
         const totalTime = (splitTimeInSeconds / 500) * distanceInMeters;
         setTotalHours(Math.floor(totalTime / 3600).toString());
-        setTotalMinutes(Math.floor((totalTime % 3600) / 60).toString());
-        setTotalSeconds(Math.floor(totalTime % 60).toString());
+        setTotalMinutes(Math.floor((totalTime % 3600) / 60).toString().padStart(2, "0"));
+        setTotalSeconds(Math.floor(totalTime % 60).toString().padStart(2, "0"));
       } else if (
         lastTwoInputs.includes(InputType.Total) &&
         lastTwoInputs.includes(InputType.Distance) &&
@@ -126,10 +134,11 @@ function TimeCalculator() {
       ) {
         const splitTime = (totalTimeInSeconds / distanceInMeters) * 500;
         setSplitMinutes(Math.floor(splitTime / 60).toString());
-        setSplitSeconds(Math.floor(splitTime % 60).toString());
+        setSplitSeconds(Math.floor(splitTime % 60).toString().padStart(2, "0"));
         setSplitTenths(Math.floor((splitTime * 10) % 10).toString());
       } else if (
-        lastTwoInputs.includes(InputType.Split) &&
+        (lastTwoInputs.includes(InputType.Split)
+          || lastTwoInputs.includes(InputType.Watts)) &&
         lastTwoInputs.includes(InputType.Total) &&
         splitTimeInSeconds > 0 &&
         totalTimeInSeconds > 0
@@ -139,26 +148,27 @@ function TimeCalculator() {
         setDistance(Math.round(calculatedDistance).toString());
       }
 
-      if (splitTimeInSeconds > 0 && !watts) {
+      if (!lastTwoInputs.includes(InputType.Watts) && splitTimeInSeconds > 0) {
+        // Calculate watts from split time when watts is not user-entered
         const calculatedWatts = splitSecondsToWatts(splitTimeInSeconds);
         setWatts(calculatedWatts.toFixed(2));
       }
 
-      if (watts && splitTimeInSeconds === 0) {
-        const calculatedSplitTime = splitSecondsToWatts(Number(watts));
+      if (lastTwoInputs.includes(InputType.Watts) && myWatts > 0 &&
+        !lastTwoInputs.includes(InputType.Split)) {
+        // Calculate split time from watts when split is not user-entered
+        const calculatedSplitTime = wattsToSplitSeconds(myWatts);
         setSplitMinutes(Math.floor(calculatedSplitTime / 60).toString());
-        setSplitSeconds(Math.floor(calculatedSplitTime % 60).toString());
+        setSplitSeconds(Math.floor(calculatedSplitTime % 60).toString().padStart(2, "0"));
         setSplitTenths(Math.floor((calculatedSplitTime * 10) % 10).toString());
       }
 
-      if (watts && Number(watts) > 0) {
-        const calculatedWatts = Number(watts);
-
+      if (myWatts > 0) {
         // Calculate watts per kilogram
         const weightInKg =
           weightUnit === "lbs" ? Number(weight) * 0.453592 : Number(weight);
         if (weightInKg > 0) {
-          const calculatedWattsPerKg = calculatedWatts / weightInKg;
+          const calculatedWattsPerKg = myWatts / weightInKg;
           setWattsPerKg(calculatedWattsPerKg.toFixed(2));
         }
       }
@@ -167,13 +177,13 @@ function TimeCalculator() {
     }
   }, [
     lastTwoInputs,
-    splitMinutes,
-    splitSeconds,
-    splitTenths,
-    totalHours,
-    totalMinutes,
-    totalSeconds,
-    distance,
+    ...(lastTwoInputs.includes(InputType.Split) ? [splitMinutes, splitSeconds, splitTenths] : []),
+    // For total time inputs
+    ...(lastTwoInputs.includes(InputType.Total) ? [totalHours, totalMinutes, totalSeconds] : []),
+    // For distance input
+    ...(lastTwoInputs.includes(InputType.Distance) ? [distance] : []),
+    // For watts input
+    ...(lastTwoInputs.includes(InputType.Watts) ? [watts] : []),
     weight,
     weightUnit,
   ]);
