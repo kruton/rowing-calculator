@@ -14,7 +14,15 @@ const RowingQuips = () => {
         "Math that works even when your legs don't",
         "Rowing calculators: the original ergometer",
         "When your brain is too oxygen-deprived to do math",
-        "Calculations faster than your personal best"
+        "Calculations faster than your personal best",
+        "Converting sweat to numbers since forever",
+        "Your virtual cox who's actually good at math",
+        "Making sense of meters when you can't feel your legs",
+        "Where numbers hurt less than your blisters",
+        "For when 'just pull harder' isn't enough guidance",
+        "Because mental math during a 6K is impossible",
+        "More reliable than your recovery day promises",
+        "Calculating everything except your excuses"
     ];
 
     const randomQuip = useMemo(() =>
