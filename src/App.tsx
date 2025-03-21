@@ -18,10 +18,7 @@ function AppContent() {
       <Box minH="100vh" py={[4, 8]} px={[2, 4]}>
         <Container maxW="container.md">
           <VStack gap={0} align="stretch">
-            <Flex flex="1" justify="center" align="center">
-              <WebsiteTitle>RowCalc.com</WebsiteTitle>
-              <ColorModeButton mx={2} />
-            </Flex>
+            <WebsiteTitle>RowCalc.com</WebsiteTitle>
 
             <Flex mb={4} flex="1" justify="center" align="center">
               <RowingQuips />
@@ -40,18 +37,22 @@ function AppContent() {
               <TimeCalculator />
             </Box>
 
-            <Box textAlign="center" mt={6} mb={2}>
-              <Text
-                fontSize="xs"
-                color={colorMode === "dark" ? "whiteAlpha.600" : "gray.500"}
-                textTransform="uppercase"
-                letterSpacing="wider"
-                fontWeight="medium"
-                fontFamily="heading"
-              >
-                Made by Kenny Root
-              </Text>
-            </Box>
+            <Flex flex="1" justify="center" align="center">
+              <Box textAlign="center" mt={6} mb={2}>
+                <Text
+                  fontSize="xs"
+                  color={colorMode === "dark" ? "whiteAlpha.600" : "gray.500"}
+                  textTransform="uppercase"
+                  letterSpacing="wider"
+                  fontWeight="medium"
+                  fontFamily="heading"
+                >
+                  Made by Kenny Root
+                </Text>
+                <ColorModeButton mx={2} />
+              </Box>
+            </Flex>
+
           </VStack>
         </Container>
       </Box>
