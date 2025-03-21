@@ -1,7 +1,11 @@
-import { useMemo } from 'react';
-import { Box, Container, Flex, VStack } from "@chakra-ui/react";
+import { useState, useEffect, useCallback } from 'react';
+import { Box } from "@chakra-ui/react";
 
-const RowingQuips = () => {
+interface RowingQuipsProps {
+    rotationInterval?: number; // Time in ms between quip changes
+}
+
+const RowingQuips = ({ rotationInterval = 10000 }: RowingQuipsProps) => {
     const quips = [
         "For when your brain is as tired as your arms",
         "Row, row, row your splits... gently down the screen",
@@ -25,22 +29,65 @@ const RowingQuips = () => {
         "Calculating everything except your excuses"
     ];
 
-    const randomQuip = useMemo(() =>
-        quips[Math.floor(Math.random() * quips.length)],
-        []
+    const [currentQuipIndex, setCurrentQuipIndex] = useState(() =>
+        Math.floor(Math.random() * quips.length)
     );
+
+    const [isVisible, setIsVisible] = useState(true);
+
+    // Get a new random quip index different from the current one
+    const getNewQuipIndex = useCallback((currentIndex: number) => {
+        if (quips.length <= 1) return 0;
+
+        let newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * quips.length);
+        } while (newIndex === currentIndex);
+
+        return newIndex;
+    }, [quips.length]);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setIsVisible(false);
+        }, rotationInterval);
+
+        return () => clearInterval(intervalId);
+    }, [rotationInterval]);
+
+    // Handle changing the quip after fade-out
+    useEffect(() => {
+        if (!isVisible) {
+            const timeoutId = setTimeout(() => {
+                setCurrentQuipIndex(prevIndex => getNewQuipIndex(prevIndex));
+                setIsVisible(true);
+            }, 500); // Fade duration
+
+            return () => clearTimeout(timeoutId);
+        }
+    }, [isVisible, getNewQuipIndex]);
 
     return (
         <Box
-            as="span"
-            fontSize="md"
-            fontFamily="heading"
-            textTransform="uppercase"
-            letterSpacing="wider"
-            fontWeight="medium"
-            color="gray.500"
+            position="relative"
+            minHeight="1.5em"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
         >
-            {randomQuip}
+            <Box
+                as="span"
+                fontSize="md"
+                fontFamily="heading"
+                textTransform="uppercase"
+                letterSpacing="wider"
+                fontWeight="medium"
+                color="gray.500"
+                opacity={isVisible ? 1 : 0}
+                transition="opacity 0.5s ease-in-out"
+            >
+                {quips[currentQuipIndex]}
+            </Box>
         </Box>
     );
 };
