@@ -5,6 +5,7 @@ import { ColorModeButton, useColorMode } from "@/components/ui/color-mode";
 import { Box, Container, Flex, Text, VStack } from "@chakra-ui/react";
 import RowingQuips from "@/components/RowingQuips";
 import "./App.css";
+import BuyMeACoffee from "./components/BuyMeACoffee";
 
 function AppContent() {
   const { colorMode } = useColorMode();
@@ -49,6 +50,7 @@ function AppContent() {
                 >
                   Made by Kenny Root
                 </Text>
+                <BuyMeACoffee />
                 <ColorModeButton mx={2} />
               </Box>
             </Flex>
