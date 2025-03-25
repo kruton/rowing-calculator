@@ -1,3 +1,4 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} **/
 import * as structuredClone from '@ungap/structured-clone'; // can be written as import { structuredClone } from '@ungap/structured-clone';  if esModuleInterop flag is used
 
 export default {
@@ -9,8 +10,7 @@ export default {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
   transform: {
-    "^.+\.tsx?$": ["ts-jest",{}],
-    "^.+\\.(js|jsx)$": "babel-jest",
+    "^.+\.[jt]sx?$": ["ts-jest", {}],
   },
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
