@@ -8,10 +8,6 @@ export default function BuyMeACoffee() {
         script.src = "https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js";
         script.setAttribute("data-id", "kruton");
         script.setAttribute("data-description", "Support me on Buy me a coffee!");
-        script.setAttribute(
-            "data-message",
-            "If you like my work, consider supporting me!",
-        );
         script.setAttribute("data-color", "#E3BD33");
         script.setAttribute("data-position", "Right");
         script.setAttribute("data-x_margin", "18");
