@@ -5,7 +5,8 @@
     ":dependencyDashboard",
     ":semanticCommits",
     ":enableVulnerabilityAlertsWithLabel(security)",
-    "schedule:weekends"
+    "schedule:weekends",
+    "helpers:pinGitHubActionDigests"
   ],
   "packageRules": [
     {
