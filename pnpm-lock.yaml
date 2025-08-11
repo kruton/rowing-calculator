@@ -71,7 +71,7 @@ importers:
         version: 1.3.0
       '@vitejs/plugin-react':
         specifier: 4.7.0
-        version: 4.7.0(vite@7.0.6(@types/node@22.10.1)(terser@5.37.0))
+        version: 4.7.0(vite@7.1.1(@types/node@22.10.1)(terser@5.37.0))
       babel-jest:
         specifier: 30.0.5
         version: 30.0.5(@babel/core@7.28.0)
@@ -106,11 +106,11 @@ importers:
         specifier: 29.4.1
         version: 29.4.1(@babel/core@7.28.0)(@jest/transform@30.0.5)(@jest/types@30.0.5)(babel-jest@30.0.5(@babel/core@7.28.0))(jest-util@30.0.5)(jest@30.0.5(@types/node@22.10.1)(babel-plugin-macros@3.1.0))(typescript@5.9.2)
       vite:
-        specifier: 7.0.6
-        version: 7.0.6(@types/node@22.10.1)(terser@5.37.0)
+        specifier: 7.1.1
+        version: 7.1.1(@types/node@22.10.1)(terser@5.37.0)
       vite-plugin-html:
         specifier: 3.2.2
-        version: 3.2.2(vite@7.0.6(@types/node@22.10.1)(terser@5.37.0))
+        version: 3.2.2(vite@7.1.1(@types/node@22.10.1)(terser@5.37.0))
 
 packages:
 
@@ -3417,10 +3417,6 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
-  picomatch@4.0.2:
-    resolution: {integrity: sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==}
-    engines: {node: '>=12'}
-
   picomatch@4.0.3:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
     engines: {node: '>=12'}
@@ -3958,8 +3954,8 @@ packages:
     peerDependencies:
       vite: '>=2.0.0'
 
-  vite@7.0.6:
-    resolution: {integrity: sha512-MHFiOENNBd+Bd9uvc8GEsIzdkn1JxMmEeYX35tI3fv0sJBUTfW5tQsoaOwuY4KhBI09A3dUJ/DXf2yxPVPUceg==}
+  vite@7.1.1:
+    resolution: {integrity: sha512-yJ+Mp7OyV+4S+afWo+QyoL9jFWD11QFH0i5i7JypnfTcA1rmgxCbiA8WwAICDEtZ1Z1hzrVhN8R8rGTqkTY8ZQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -5907,7 +5903,7 @@ snapshots:
 
   '@visulima/boxen@2.0.2': {}
 
-  '@vitejs/plugin-react@4.7.0(vite@7.0.6(@types/node@22.10.1)(terser@5.37.0))':
+  '@vitejs/plugin-react@4.7.0(vite@7.1.1(@types/node@22.10.1)(terser@5.37.0))':
     dependencies:
       '@babel/core': 7.28.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.0)
@@ -5915,7 +5911,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 7.0.6(@types/node@22.10.1)(terser@5.37.0)
+      vite: 7.1.1(@types/node@22.10.1)(terser@5.37.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -7996,7 +7992,7 @@ snapshots:
       chalk: 4.1.2
       ci-info: 4.2.0
       graceful-fs: 4.2.11
-      picomatch: 4.0.2
+      picomatch: 4.0.3
 
   jest-util@30.0.5:
     dependencies:
@@ -8382,8 +8378,6 @@ snapshots:
   picocolors@1.1.1: {}
 
   picomatch@2.3.1: {}
-
-  picomatch@4.0.2: {}
 
   picomatch@4.0.3: {}
 
@@ -8981,7 +8975,7 @@ snapshots:
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
 
-  vite-plugin-html@3.2.2(vite@7.0.6(@types/node@22.10.1)(terser@5.37.0)):
+  vite-plugin-html@3.2.2(vite@7.1.1(@types/node@22.10.1)(terser@5.37.0)):
     dependencies:
       '@rollup/pluginutils': 4.2.1
       colorette: 2.0.20
@@ -8995,9 +8989,9 @@ snapshots:
       html-minifier-terser: 6.1.0
       node-html-parser: 5.4.2
       pathe: 0.2.0
-      vite: 7.0.6(@types/node@22.10.1)(terser@5.37.0)
+      vite: 7.1.1(@types/node@22.10.1)(terser@5.37.0)
 
-  vite@7.0.6(@types/node@22.10.1)(terser@5.37.0):
+  vite@7.1.1(@types/node@22.10.1)(terser@5.37.0):
     dependencies:
       esbuild: 0.25.2
       fdir: 6.4.6(picomatch@4.0.3)
