@@ -24,8 +24,8 @@
     "typescript": "5.9.2"
   },
   "devDependencies": {
-    "@babel/core": "7.28.0",
-    "@babel/preset-env": "7.28.0",
+    "@babel/core": "7.28.3",
+    "@babel/preset-env": "7.28.3",
     "@babel/preset-react": "7.27.1",
     "@chakra-ui/cli": "3.24.2",
     "@jest/globals": "30.0.5",
