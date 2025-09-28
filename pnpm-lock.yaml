@@ -71,7 +71,7 @@ importers:
         version: 1.3.0
       '@vitejs/plugin-react':
         specifier: 5.0.3
-        version: 5.0.3(vite@7.1.6(@types/node@22.10.1)(terser@5.37.0))
+        version: 5.0.3(vite@7.1.7(@types/node@22.10.1)(terser@5.37.0))
       babel-jest:
         specifier: 30.1.2
         version: 30.1.2(@babel/core@7.28.4)
@@ -106,11 +106,11 @@ importers:
         specifier: 29.4.4
         version: 29.4.4(@babel/core@7.28.4)(@jest/transform@30.1.2)(@jest/types@30.0.5)(babel-jest@30.1.2(@babel/core@7.28.4))(jest-util@30.0.5)(jest@30.1.3(@types/node@22.10.1)(babel-plugin-macros@3.1.0))(typescript@5.9.2)
       vite:
-        specifier: 7.1.6
-        version: 7.1.6(@types/node@22.10.1)(terser@5.37.0)
+        specifier: 7.1.7
+        version: 7.1.7(@types/node@22.10.1)(terser@5.37.0)
       vite-plugin-html:
         specifier: 3.2.2
-        version: 3.2.2(vite@7.1.6(@types/node@22.10.1)(terser@5.37.0))
+        version: 3.2.2(vite@7.1.7(@types/node@22.10.1)(terser@5.37.0))
 
 packages:
 
@@ -3926,8 +3926,8 @@ packages:
     peerDependencies:
       vite: '>=2.0.0'
 
-  vite@7.1.6:
-    resolution: {integrity: sha512-SRYIB8t/isTwNn8vMB3MR6E+EQZM/WG1aKmmIUCfDXfVvKfc20ZpamngWHKzAmmu9ppsgxsg4b2I7c90JZudIQ==}
+  vite@7.1.7:
+    resolution: {integrity: sha512-VbA8ScMvAISJNJVbRDTJdCwqQoAareR/wutevKanhR2/1EkoXVZVkkORaYm/tNVCjP/UDTKtcw3bAkwOUdedmA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -5868,7 +5868,7 @@ snapshots:
 
   '@visulima/boxen@2.0.2': {}
 
-  '@vitejs/plugin-react@5.0.3(vite@7.1.6(@types/node@22.10.1)(terser@5.37.0))':
+  '@vitejs/plugin-react@5.0.3(vite@7.1.7(@types/node@22.10.1)(terser@5.37.0))':
     dependencies:
       '@babel/core': 7.28.4
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.4)
@@ -5876,7 +5876,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.35
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 7.1.6(@types/node@22.10.1)(terser@5.37.0)
+      vite: 7.1.7(@types/node@22.10.1)(terser@5.37.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -8921,7 +8921,7 @@ snapshots:
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
 
-  vite-plugin-html@3.2.2(vite@7.1.6(@types/node@22.10.1)(terser@5.37.0)):
+  vite-plugin-html@3.2.2(vite@7.1.7(@types/node@22.10.1)(terser@5.37.0)):
     dependencies:
       '@rollup/pluginutils': 4.2.1
       colorette: 2.0.20
@@ -8935,9 +8935,9 @@ snapshots:
       html-minifier-terser: 6.1.0
       node-html-parser: 5.4.2
       pathe: 0.2.0
-      vite: 7.1.6(@types/node@22.10.1)(terser@5.37.0)
+      vite: 7.1.7(@types/node@22.10.1)(terser@5.37.0)
 
-  vite@7.1.6(@types/node@22.10.1)(terser@5.37.0):
+  vite@7.1.7(@types/node@22.10.1)(terser@5.37.0):
     dependencies:
       esbuild: 0.25.2
       fdir: 6.5.0(picomatch@4.0.3)
