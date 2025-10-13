@@ -85,8 +85,8 @@ importers:
         specifier: 7.37.5
         version: 7.37.5(eslint@9.37.0)
       eslint-plugin-react-hooks:
-        specifier: 6.1.1
-        version: 6.1.1(eslint@9.37.0)
+        specifier: 7.0.0
+        version: 7.0.0(eslint@9.37.0)
       eslint-plugin-react-refresh:
         specifier: 0.4.23
         version: 0.4.23(eslint@9.37.0)
@@ -238,11 +238,6 @@ packages:
   '@babel/helpers@7.28.4':
     resolution: {integrity: sha512-HFN59MmQXGHVyYadKLVumYsA9dBFun/ldYxipEjzA4196jpLZd8UjEEBLkbEkvfYreDqJhZxYAWFPtrfhNpj4w==}
     engines: {node: '>=6.9.0'}
-
-  '@babel/parser@7.28.3':
-    resolution: {integrity: sha512-7+Ey1mAgYqFAx2h0RuoxcQT5+MlG3GTV0TQrgr7/ZliKsm/MNDxVVutlWaziMq7wJNAz8MTqz55XLpWvva6StA==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
 
   '@babel/parser@7.28.4':
     resolution: {integrity: sha512-yZbBqeM6TkpP9du/I2pUZnJsRMGGvOuIrhjzC1AwHwW+6he4mni6Bp/m8ijn0iOuZuPI2BfkCoSRunpyjnrQKg==}
@@ -2378,8 +2373,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  eslint-plugin-react-hooks@6.1.1:
-    resolution: {integrity: sha512-St9EKZzOAQF704nt2oJvAKZHjhrpg25ClQoaAlHmPZuajFldVLqRDW4VBNAS01NzeiQF0m0qhG1ZA807K6aVaQ==}
+  eslint-plugin-react-hooks@7.0.0:
+    resolution: {integrity: sha512-fNXaOwvKwq2+pXiRpXc825Vd63+KM4DLL40Rtlycb8m7fYpp6efrTp1sa6ZbP/Ap58K2bEKFXRmhURE+CJAQWw==}
     engines: {node: '>=18'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -2666,6 +2661,12 @@ packages:
   he@1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
+
+  hermes-estree@0.25.1:
+    resolution: {integrity: sha512-0wUoCcLp+5Ev5pDW2OriHC2MJCbwLwuRx+gAqMTOkGKJJiBCLjtrvy4PWUGn6MIVefecRpzoOZ/UV6iGdOr+Cw==}
+
+  hermes-parser@0.25.1:
+    resolution: {integrity: sha512-6pEjquH3rqaI6cYAXYPcz9MS4rY6R4ngRgrgfDshRptUZIc3lw0MCIJIGDj9++mfySOuPTHB4nrSW99BCvOPIA==}
 
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
@@ -4340,10 +4341,6 @@ snapshots:
       '@babel/template': 7.27.2
       '@babel/types': 7.28.4
 
-  '@babel/parser@7.28.3':
-    dependencies:
-      '@babel/types': 7.28.4
-
   '@babel/parser@7.28.4':
     dependencies:
       '@babel/types': 7.28.4
@@ -4969,7 +4966,7 @@ snapshots:
       '@babel/code-frame': 7.27.1
       '@babel/generator': 7.28.3
       '@babel/helper-globals': 7.28.0
-      '@babel/parser': 7.28.3
+      '@babel/parser': 7.28.4
       '@babel/template': 7.27.2
       '@babel/types': 7.28.2
       debug: 4.4.1
@@ -7035,11 +7032,12 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-plugin-react-hooks@6.1.1(eslint@9.37.0):
+  eslint-plugin-react-hooks@7.0.0(eslint@9.37.0):
     dependencies:
       '@babel/core': 7.28.4
       '@babel/parser': 7.28.4
       eslint: 9.37.0
+      hermes-parser: 0.25.1
       zod: 3.25.67
       zod-validation-error: 4.0.2(zod@3.25.67)
     transitivePeerDependencies:
@@ -7402,6 +7400,12 @@ snapshots:
       function-bind: 1.1.2
 
   he@1.2.0: {}
+
+  hermes-estree@0.25.1: {}
+
+  hermes-parser@0.25.1:
+    dependencies:
+      hermes-estree: 0.25.1
 
   hoist-non-react-statics@3.3.2:
     dependencies:
