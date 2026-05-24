@@ -48,7 +48,7 @@
     "identity-obj-proxy": "3.0.0",
     "jest": "30.4.2",
     "jest-environment-jsdom": "30.4.1",
-    "ts-jest": "29.4.9",
+    "ts-jest": "29.4.11",
     "vite": "8.0.13",
     "vite-plugin-html": "3.2.2"
   },
