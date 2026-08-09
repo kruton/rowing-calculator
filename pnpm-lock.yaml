@@ -74,7 +74,7 @@ importers:
         version: 1.3.3
       '@vitejs/plugin-react':
         specifier: 6.0.5
-        version: 6.0.5(vite@8.2.0(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0))
+        version: 6.0.5(vite@8.2.1(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0))
       babel-jest:
         specifier: 30.4.1
         version: 30.4.1(@babel/core@8.0.1)(supports-color@8.1.1)
@@ -109,11 +109,11 @@ importers:
         specifier: 29.4.12
         version: 29.4.12(@babel/core@8.0.1)(@jest/transform@30.4.1(supports-color@8.1.1))(@jest/types@30.4.1)(@typescript/typescript6@6.0.2)(babel-jest@30.4.1(@babel/core@8.0.1)(supports-color@8.1.1))(esbuild@0.28.1)(jest-util@30.4.1)(jest@30.4.2(@types/node@22.10.1)(babel-plugin-macros@3.1.0)(supports-color@8.1.1))
       vite:
-        specifier: 8.2.0
-        version: 8.2.0(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0)
+        specifier: 8.2.1
+        version: 8.2.1(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0)
       vite-plugin-html:
         specifier: 3.2.2
-        version: 3.2.2(vite@8.2.0(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0))
+        version: 3.2.2(vite@8.2.1(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0))
 
 packages:
 
@@ -4305,8 +4305,8 @@ packages:
     peerDependencies:
       vite: '>=2.0.0'
 
-  vite@8.2.0:
-    resolution: {integrity: sha512-pn+CFpM0lwDeKwmOq1ZaBK/9sjorZcgqxki6MbY/jPEVd9vichIlmlD4HmQ5wdP5EgqQCFRaACBxMC7uEGc6lQ==}
+  vite@8.2.1:
+    resolution: {integrity: sha512-EU/eS7BH3XROHh2YnBefjM6DBKA6ZeMZEYQbj7NLWg5wHYlhB8B/Mayd5XsgWq+NFYccDOTemRpdETWR6Ka/lw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -6472,10 +6472,10 @@ snapshots:
 
   '@visulima/boxen@2.0.10': {}
 
-  '@vitejs/plugin-react@6.0.5(vite@8.2.0(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0))':
+  '@vitejs/plugin-react@6.0.5(vite@8.2.1(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
-      vite: 8.2.0(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0)
+      vite: 8.2.1(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0)
 
   '@zag-js/accordion@1.41.2':
     dependencies:
@@ -9653,7 +9653,7 @@ snapshots:
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
 
-  vite-plugin-html@3.2.2(vite@8.2.0(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0)):
+  vite-plugin-html@3.2.2(vite@8.2.1(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0)):
     dependencies:
       '@rollup/pluginutils': 4.2.1
       colorette: 2.0.20
@@ -9667,9 +9667,9 @@ snapshots:
       html-minifier-terser: 6.1.0
       node-html-parser: 5.4.2
       pathe: 0.2.0
-      vite: 8.2.0(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0)
+      vite: 8.2.1(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0)
 
-  vite@8.2.0(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0):
+  vite@8.2.1(@types/node@22.10.1)(esbuild@0.28.1)(terser@5.37.0):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.5
