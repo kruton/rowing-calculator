@@ -25,8 +25,8 @@
     "typescript": "npm:@typescript/typescript6@6.0.2"
   },
   "devDependencies": {
-    "@babel/core": "8.0.1",
-    "@babel/preset-env": "8.0.2",
+    "@babel/core": "8.0.5",
+    "@babel/preset-env": "8.0.5",
     "@babel/preset-react": "8.0.1",
     "@chakra-ui/cli": "3.37.0",
     "@jest/globals": "30.4.1",
