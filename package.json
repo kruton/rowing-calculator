@@ -53,7 +53,7 @@
     "vite": "8.3.0",
     "vite-plugin-html": "3.2.2"
   },
-  "packageManager": "pnpm@11.27.0",
+  "packageManager": "pnpm@12.4.2",
   "pnpm": {
     "onlyBuiltDependencies": [
       "dprint",
